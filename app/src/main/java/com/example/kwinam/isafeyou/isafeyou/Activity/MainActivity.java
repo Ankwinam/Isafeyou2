@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         // primary sections of the activity.
         //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        tabLayout = (TabLayout)findViewById(R.id.action_settings); ///s
+        tabLayout = (TabLayout)findViewById(R.id.tabs);
 
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon_selected));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon_selected));  //set Icon
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.search_icon));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.suggest_icon));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.alarm_icon));
@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
                 switch(tab.getPosition()){
-                    case 0: tab.setIcon(R.drawable.home_icon_selected); break;
-                    case 1: tab.setIcon(R.drawable.search_icon_selected); break;
-                    case 2: tab.setIcon(R.drawable.suggest_icon_selected); break;
-                    case 3: tab.setIcon(R.drawable.alarm_icon_selected); break;
-                    case 4: tab.setIcon(R.drawable.mypage_icon_selected); break;
+                    case 0: tab.setIcon(R.drawable.home_pink); break;
+                    case 1: tab.setIcon(R.drawable.map_pink); break;
+                    case 2: tab.setIcon(R.drawable.contacts_pink); break;
+                    case 3: tab.setIcon(R.drawable.communication_pink); break;
+                    case 4: tab.setIcon(R.drawable.settings_pink); break;
 
                 }
             }
@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 switch(tab.getPosition()){
-                    case 0: tab.setIcon(R.drawable.home_icon); break;
-                    case 1: tab.setIcon(R.drawable.search_icon); break;
-                    case 2: tab.setIcon(R.drawable.suggest_icon); break;
-                    case 3: tab.setIcon(R.drawable.alarm_icon); break;
-                    case 4: tab.setIcon(R.drawable.mypage_icon); break;
+                    case 0: tab.setIcon(R.drawable.home_grey); break;
+                    case 1: tab.setIcon(R.drawable.map_grey); break;
+                    case 2: tab.setIcon(R.drawable.contacts_grey); break;
+                    case 3: tab.setIcon(R.drawable.communication_grey); break;
+                    case 4: tab.setIcon(R.drawable.settings_grey); break;
 
                 }
             }
