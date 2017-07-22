@@ -32,13 +32,16 @@ public class MainActivity extends AppCompatActivity {
         // primary sections of the activity.
         //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         tabLayout = (TabLayout)findViewById(R.id.tabs);
 
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon_selected));  //set Icon
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.search_icon));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.suggest_icon));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.alarm_icon));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.mypage_icon));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_pink));  //set Icon
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.map_grey));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.contacts_grey));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.communication_grey));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.settings_grey));
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);

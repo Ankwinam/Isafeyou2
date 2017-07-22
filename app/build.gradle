@@ -27,4 +27,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:design:25.3.0'
     testCompile 'junit:junit:4.12'
+    //Circular Image View
+    compile 'com.pkmmte.view:circularimageview:1.1'
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.google.android.gms:play-services:9.8.0'
+    compile 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.google.android.gms:play-services:9.8.0'
+    compile 'com.mcxiaoke.volley:library-aar:1.0.0'
 }
