@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
         // primary sections of the activity.
         //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        tabLayout = (TabLayout)findViewById(R.id.tabs); ///s
+        tabLayout = (TabLayout)findViewById(R.id.action_settings); ///s
 
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon_selected)); //aaaaaaaaaaaaaa
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.search_icon));    //bbbbbbbbb
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon_selected));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.search_icon));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.suggest_icon));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.alarm_icon));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.mypage_icon));
