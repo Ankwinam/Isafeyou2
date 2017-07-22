@@ -1,18 +1,25 @@
 package com.example.kwinam.isafeyou.isafeyou.Activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.kwinam.isafeyou.R;
 import com.example.kwinam.isafeyou.isafeyou.Adapter.TabPagerAdapter;
+import com.example.kwinam.isafeyou.isafeyou.Fragment.TabFragment2;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,12 +27,13 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager mViewPager;
+    LocationManager lm = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -105,7 +113,42 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        switch (keyCode) {
+            //하드웨어 뒤로가기 버튼에 따른 이벤트 설정
+            case KeyEvent.KEYCODE_BACK:
+
+                new AlertDialog.Builder(this)
+                        .setTitle("프로그램 종료")
+                        .setMessage("프로그램을 종료 하시겠습니까?")
+                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 프로세스 종료.
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                            }
+                        })
+                        .setNegativeButton("아니오", null)
+                        .show();
+                break;
+            default:
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
