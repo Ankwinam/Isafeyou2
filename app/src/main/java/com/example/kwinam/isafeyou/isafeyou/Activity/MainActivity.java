@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout)findViewById(R.id.tabs); ///s
 
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon_selected)); //aaaaaaaaaaaaaa
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.search_icon));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.search_icon));    //bbbbbbbbb
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.suggest_icon));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.alarm_icon));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.mypage_icon));
