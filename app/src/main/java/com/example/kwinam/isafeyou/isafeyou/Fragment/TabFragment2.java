@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -23,10 +27,16 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
+import com.skp.Tmap.TMapMarkerItem;
+import com.skp.Tmap.TMapPOIItem;
 import com.skp.Tmap.TMapPoint;
+import com.skp.Tmap.TMapPolyLine;
 import com.skp.Tmap.TMapView;
 import com.example.kwinam.isafeyou.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by KwiNam on 2017-07-19.
@@ -40,6 +50,8 @@ public class TabFragment2 extends Fragment {
     LocationManager lm = null;
     Button target;
     TMapPoint point = null;
+    boolean askGPS = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,8 +64,18 @@ public class TabFragment2 extends Fragment {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-        target = (Button)view.findViewById(R.id.btn_target);
-        target.setOnClickListener(new Button.OnClickListener(){
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //User has previously accepted this permission
+            if (ActivityCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                startGPS();
+            }
+        } else {
+            //Not in api-23, no need to prompt
+            startGPS();
+        }
+        target = (Button) view.findViewById(R.id.btn_target);
+        target.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 point = tmapgps.getLocation();
@@ -75,22 +97,12 @@ public class TabFragment2 extends Fragment {
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER);
-        tmapgps.OpenGps();
-
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                1000, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                1000, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
 
         tmapview.setIconVisibility(true);
         tmapview.setTrackingMode(true);
         tmapview.setSightVisible(false);
-        Log.e("tmapview",tmapview+"");
-
+        Log.e("tmapview", tmapview + "");
+        searchPOI();
         return view;
     }
 
@@ -110,29 +122,12 @@ public class TabFragment2 extends Fragment {
 
     @Override
     public void onResume() {
-        tmapgps.OpenGps();
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                1000, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                1000, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
+        startGPS();
         super.onResume();
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -163,12 +158,49 @@ public class TabFragment2 extends Fragment {
             return true;
         }
     }
+
+    private void searchPOI() {
+        TMapData data = new TMapData();
+        TMapPoint tmappoint = new TMapPoint(tmapgps.getLocation().getLatitude(), tmapgps.getLocation().getLongitude());
+        String keyword = "경찰서";
+    }
+
+    public void addMarker(TMapPOIItem poi) {
+        TMapMarkerItem item = new TMapMarkerItem();
+        item.setTMapPoint(poi.getPOIPoint());
+        Bitmap icon = ((BitmapDrawable) ContextCompat.getDrawable(getActivity(), android.R.drawable.ic_input_add)).getBitmap();
+        item.setIcon(icon);
+        item.setPosition(0.5f, 1);
+        item.setCalloutTitle(poi.getPOIName());
+        item.setCalloutSubTitle(poi.getPOIContent());
+        Bitmap left = ((BitmapDrawable) ContextCompat.getDrawable(getActivity(), android.R.drawable.ic_dialog_alert)).getBitmap();
+        item.setCalloutLeftImage(left);
+        Bitmap right = ((BitmapDrawable) ContextCompat.getDrawable(getActivity(), android.R.drawable.ic_input_get)).getBitmap();
+        item.setCalloutRightButtonImage(right);
+        item.setCanShowCallout(true);
+        tmapview.addMarkerItem(poi.getPOIID(), item);
+    }
+
+
+    private void searchRoute(TMapPoint start, TMapPoint end) {
+        TMapData data = new TMapData();
+        data.findPathDataWithType(TMapData.TMapPathType.PEDESTRIAN_PATH, start, end, new TMapData.FindPathDataListenerCallback() {
+            @Override
+            public void onFindPathData(TMapPolyLine path) {
+                path.setLineWidth(5);
+                path.setLineColor(Color.RED);
+                TMapView mapView;
+                tmapview.addTMapPath(path);
+            }
+        });
+    }
+
     public final LocationListener mLocationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             //여기서 위치값이 갱신되면 이벤트가 발생한다.
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
             if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-                Log.e("GPS changed","바뀌고 있다! "+ location.getLatitude() +","+ location.getLongitude());
+                Log.e("GPS changed", "바뀌고 있다! " + location.getLatitude() + "," + location.getLongitude());
                 //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
                 double longitude = location.getLongitude();    //경도
                 double latitude = location.getLatitude();         //위도
@@ -176,30 +208,23 @@ public class TabFragment2 extends Fragment {
                 //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
                 //Network 위치제공자에 의한 위치변화
                 //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
-                tmapview.setLocationPoint(longitude,latitude);
-                tmapview.setCenterPoint(longitude,latitude);
-            }
-            else if(location.getProvider().equals(LocationManager.NETWORK_PROVIDER)){
-                Log.e("Network changed","바뀌고 있다! "+ location.getLatitude() +","+ location.getLongitude());
+                tmapview.setLocationPoint(longitude, latitude);
+                tmapview.setCenterPoint(longitude, latitude);
+            } else if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
+                Log.e("Network changed", "바뀌고 있다! " + location.getLatitude() + "," + location.getLongitude());
                 double longitude = location.getLongitude();    //경도
                 double latitude = location.getLatitude();         //위도
                 float accuracy = location.getAccuracy();        //신뢰도
-                tmapview.setLocationPoint(longitude,latitude);
-                tmapview.setCenterPoint(longitude,latitude);
+                tmapview.setLocationPoint(longitude, latitude);
+                tmapview.setCenterPoint(longitude, latitude);
             }
         }
+
         public void onProviderDisabled(String provider) {
-            // Disabled시
-            new AlertDialog.Builder(getActivity())
-                    .setMessage("GPS가 꺼져있습니다.\n GPS를 켜시면 더 정확한 정보파악이 가능해집니다.")
-                    .setPositiveButton("설정",new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("취소",null).show();
+            if (!askGPS) {
+                askGPS = true;
+                showSettingsAlert();
+            }
         }
 
         public void onProviderEnabled(String provider) {
@@ -211,4 +236,77 @@ public class TabFragment2 extends Fragment {
             Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
+
+    public void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+
+        alertDialog.setTitle("GPS 사용유무셋팅");
+        alertDialog.setMessage("GPS 셋팅이 되지 않았을수도 있습니다.\n 설정창으로 가시겠습니까?");
+
+        // OK 를 누르게 되면 설정창으로 이동합니다.
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        getActivity().startActivity(intent);
+                    }
+                });
+        // Cancle 하면 종료 합니다.
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+    public void startGPS() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        tmapgps.OpenGps();
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
+                1000, // 통지사이의 최소 시간간격 (miliSecond)
+                1, // 통지사이의 최소 변경거리 (m)
+                mLocationListener);
+
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
+                1000, // 통지사이의 최소 시간간격 (miliSecond)
+                1, // 통지사이의 최소 변경거리 (m)
+                mLocationListener);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay!
+                    if (ActivityCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        startGPS();
+                    }
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+        }
+    }
 }
