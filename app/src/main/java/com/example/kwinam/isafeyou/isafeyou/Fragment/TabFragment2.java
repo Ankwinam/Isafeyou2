@@ -46,6 +46,7 @@ public class TabFragment2 extends Fragment {
         tmapgps = new TMapGpsManager(getActivity());
 
         View view = inflater.inflate(R.layout.fragment_2, container, false);
+
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         Log.e("LocationManager", lm + "");
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
