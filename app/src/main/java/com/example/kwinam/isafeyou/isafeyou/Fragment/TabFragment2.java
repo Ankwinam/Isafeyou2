@@ -176,8 +176,8 @@ public class TabFragment2 extends Fragment {
         data.findPathDataWithType(TMapData.TMapPathType.PEDESTRIAN_PATH, start, end, new TMapData.FindPathDataListenerCallback() {
             @Override
             public void onFindPathData(TMapPolyLine path) {
-                path.setLineWidth(5);
-                path.setLineColor(Color.RED);
+                path.setLineWidth(20);
+                path.setLineColor(Color.rgb(255,153,153));
                 tmapview.addTMapPath(path);
             }
         });
