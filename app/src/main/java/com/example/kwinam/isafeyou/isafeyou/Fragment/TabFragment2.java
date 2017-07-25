@@ -57,7 +57,7 @@ public class TabFragment2 extends Fragment {
     private Double lon = null;
     private TMapData tmapdata = null;
 
-//
+    //
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         tmapgps = new TMapGpsManager(getActivity());
@@ -111,9 +111,10 @@ public class TabFragment2 extends Fragment {
                 lat = markerItem.latitude;
                 lon = markerItem.longitude;
                 TMapPoint start = tmapview.getLocationPoint();
-                TMapPoint end = new TMapPoint(lat,lon);
+                TMapPoint end = new TMapPoint(lat, lon);
                 tmapview.removeAllTMapPolyLine();
-               searchRoute(start,end);
+                tmapview.removeAllMarkerItem();
+                searchRoute(start, end);
             }
 
         });
@@ -165,7 +166,6 @@ public class TabFragment2 extends Fragment {
             return true;
         }
     }
-
 
 
     private void searchRoute(TMapPoint start, TMapPoint end) {
@@ -266,7 +266,7 @@ public class TabFragment2 extends Fragment {
                 mLocationListener);
     }
 
-    public void stopGPS(){
+    public void stopGPS() {
         lm.removeUpdates(mLocationListener);
         tmapgps.CloseGps();
     }
@@ -307,7 +307,9 @@ public class TabFragment2 extends Fragment {
                         } else {
                             for (int i = 0; i < poiItem.size(); i++) {
                                 TMapPOIItem item = poiItem.get(i);
-                                m_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
+                                if (item.getPOIName().contains("경찰") || item.getPOIName().contains("파출") || item.getPOIName().contains("복지") || item.getPOIName().contains("방범")) {
+                                    m_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
+                                }
                             }
                             for (int i = 0; i < m_mapPoint.size(); i++) {
                                 TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(), m_mapPoint.get(i).getLongitude());
@@ -334,5 +336,44 @@ public class TabFragment2 extends Fragment {
                         }
                     }
                 });
+
+        tmapdata.findAroundNamePOI(point, "편의점", 2, 5,
+                new TMapData.FindAroundNamePOIListenerCallback() {
+                    @Override
+                    public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                        if (poiItem == null) {
+                        } else {
+                            for (int i = 0; i < poiItem.size(); i++) {
+                                TMapPOIItem item = poiItem.get(i);
+                                m_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
+
+                            }
+                            for (int i = 0; i < m_mapPoint.size(); i++) {
+                                TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(), m_mapPoint.get(i).getLongitude());
+                                TMapMarkerItem item1 = new TMapMarkerItem();
+                                Bitmap bitmap = null;
+                                 /* 핀 이미지 */
+                                bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.poi_dot);
+                                item1.setTMapPoint(point);
+                                item1.setName(m_mapPoint.get(i).getName());
+                                item1.setVisible(item1.VISIBLE);
+                                item1.setIcon(bitmap);
+                                item1.setCalloutTitle(m_mapPoint.get(i).getName());
+                                item1.setCalloutSubTitle("까지 최단경로 탐색");
+                                item1.setCanShowCallout(true);
+                                item1.setAutoCalloutVisible(true);
+
+                                Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
+                                item1.setCalloutRightButtonImage(bitmap_i);
+
+                                String strID = String.format("pmarker%d", mMarkerID++);
+
+                                tmapview.addMarkerItem(strID, item1);
+                            }
+                        }
+                    }
+                });
+
+
     }
 }
