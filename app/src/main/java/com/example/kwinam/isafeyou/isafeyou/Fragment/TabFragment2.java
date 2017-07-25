@@ -57,7 +57,7 @@ public class TabFragment2 extends Fragment {
     private Double lon = null;
     private TMapData tmapdata = null;
 
-
+//
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         tmapgps = new TMapGpsManager(getActivity());
