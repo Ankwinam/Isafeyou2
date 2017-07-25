@@ -1,6 +1,7 @@
 package com.example.kwinam.isafeyou.isafeyou.Fragment;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,8 +61,8 @@ public class TabFragment2 extends Fragment {
     //
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        tmapgps = new TMapGpsManager(getActivity());
         tmapdata = new TMapData();
+        tmapgps = new TMapGpsManager(getActivity());
         View view = inflater.inflate(R.layout.fragment_2, container, false);
 
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -83,9 +84,14 @@ public class TabFragment2 extends Fragment {
             @Override
             public void onClick(View v) {
                 point = tmapgps.getLocation();
+                if(point.getLongitude()<120){
+                    Toast.makeText(getActivity(), "GPS 신호를 찾는중 입니다. \n실내 환경에서는 다소 지연될 수 있습니다.", Toast.LENGTH_LONG).show();
+                }
                 tmapview.setCenterPoint(point.getLongitude(), point.getLatitude());
                 tmapview.setZoomLevel(15);
+                tmapview.removeAllTMapPolyLine();
                 tmapview.removeAllMarkerItem();
+                tmapview.removeAllTMapPOIItem();
                 getAroundpopo();
             }
         });
@@ -97,7 +103,6 @@ public class TabFragment2 extends Fragment {
         tmapview.setZoomLevel(15);
         tmapview.setMapType(TMapView.MAPTYPE_SATELLITE);
         tmapview.setLanguage(TMapView.LANGUAGE_KOREAN);
-        tmapgps = new TMapGpsManager(getActivity());
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER);
@@ -112,13 +117,10 @@ public class TabFragment2 extends Fragment {
                 lon = markerItem.longitude;
                 TMapPoint start = tmapview.getLocationPoint();
                 TMapPoint end = new TMapPoint(lat, lon);
-                tmapview.removeAllTMapPolyLine();
-                tmapview.removeAllMarkerItem();
                 searchRoute(start, end);
             }
 
         });
-
         return view;
     }
 
@@ -127,6 +129,7 @@ public class TabFragment2 extends Fragment {
         stopGPS();
         super.onStop();
     }
+
 
     @Override
     public void onResume() {
@@ -267,8 +270,8 @@ public class TabFragment2 extends Fragment {
     }
 
     public void stopGPS() {
-        lm.removeUpdates(mLocationListener);
         tmapgps.CloseGps();
+        lm.removeUpdates(mLocationListener);
     }
 
     @Override
@@ -373,7 +376,6 @@ public class TabFragment2 extends Fragment {
                         }
                     }
                 });
-
-
+        m_mapPoint.clear();
     }
 }
