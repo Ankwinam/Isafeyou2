@@ -302,8 +302,7 @@ public class TabFragment2 extends Fragment {
     public void getAroundpopo() {
         TMapData tmapdata = new TMapData();
         TMapPoint point = tmapview.getCenterPoint();
-        tmapdata.findAroundNamePOI(point, "관공서", 2, 10,
-                new TMapData.FindAroundNamePOIListenerCallback() {
+        tmapdata.findAroundNamePOI(point, "관공서", 2, 10, new TMapData.FindAroundNamePOIListenerCallback() {
                     @Override
                     public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
                         if (poiItem == null) {
@@ -349,7 +348,6 @@ public class TabFragment2 extends Fragment {
                             for (int i = 0; i < poiItem.size(); i++) {
                                 TMapPOIItem item = poiItem.get(i);
                                 m_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
-
                             }
                             for (int i = 0; i < m_mapPoint.size(); i++) {
                                 TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(), m_mapPoint.get(i).getLongitude());
@@ -364,8 +362,6 @@ public class TabFragment2 extends Fragment {
                                 item1.setCalloutTitle(m_mapPoint.get(i).getName());
                                 item1.setCalloutSubTitle("까지 최단경로 탐색");
                                 item1.setCanShowCallout(true);
-                                item1.setAutoCalloutVisible(true);
-
                                 Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
                                 item1.setCalloutRightButtonImage(bitmap_i);
 
