@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.kwinam.isafeyou.R;
 import com.example.kwinam.isafeyou.isafeyou.Adapter.TabPagerAdapter;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     LocationManager lm = null;
 
+    private TextView toolbar_title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // primary sections of the activity.
         //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -68,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
                 switch(tab.getPosition()){
-                    case 0: tab.setIcon(R.drawable.home_pink); break;
-                    case 1: tab.setIcon(R.drawable.map_pink); break;
-                    case 2: tab.setIcon(R.drawable.contacts_pink); break;
-                    case 3: tab.setIcon(R.drawable.communication_pink); break;
-                    case 4: tab.setIcon(R.drawable.settings_pink); break;
+                    case 0: tab.setIcon(R.drawable.home_pink); toolbar_title.setText("I·SAFE·U"); break;
+                    case 1: tab.setIcon(R.drawable.map_pink); toolbar_title.setText("지도"); break;
+                    case 2: tab.setIcon(R.drawable.contacts_pink); toolbar_title.setText("연락 목록"); break;
+                    case 3: tab.setIcon(R.drawable.communication_pink); toolbar_title.setText("커뮤니티"); break;
+                    case 4: tab.setIcon(R.drawable.settings_pink); toolbar_title.setText("설정"); break;
 
                 }
             }
@@ -102,15 +106,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
     }
     @Override

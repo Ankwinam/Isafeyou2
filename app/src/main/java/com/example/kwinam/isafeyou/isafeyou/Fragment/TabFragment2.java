@@ -63,6 +63,7 @@ public class TabFragment2 extends Fragment {
         tmapgps = new TMapGpsManager(getActivity());
         tmapdata = new TMapData();
         View view = inflater.inflate(R.layout.fragment_2, container, false);
+
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
