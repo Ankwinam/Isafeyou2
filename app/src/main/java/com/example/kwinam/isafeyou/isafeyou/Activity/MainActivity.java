@@ -24,7 +24,7 @@ import com.example.kwinam.isafeyou.isafeyou.Fragment.TabFragment2;
 public class MainActivity extends AppCompatActivity {
 
     //private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    TabFragment2 tabFragment2 = new TabFragment2();
     private TabLayout tabLayout;
     private ViewPager mViewPager;
     LocationManager lm = null;
@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-
         super.onPause();
     }
 
