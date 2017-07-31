@@ -3,8 +3,10 @@ package com.example.kwinam.isafeyou.isafeyou.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kwinam.isafeyou.R;
+import com.example.kwinam.isafeyou.isafeyou.Fragment.TabFragment3;
 import com.google.android.gms.vision.text.Text;
 
 public class ContactAddActivity extends AppCompatActivity {
@@ -25,6 +28,7 @@ public class ContactAddActivity extends AppCompatActivity {
 
     TextView textname;
     TextView textphone;
+    TextView textemergency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +40,17 @@ public class ContactAddActivity extends AppCompatActivity {
 
         textname = (TextView)findViewById(R.id.contactadd_nameinput);
         textphone = (TextView)findViewById(R.id.contactadd_phoneinput);
+        textemergency = (TextView)findViewById(R.id.contactadd_messageinput);
 
         add_decision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "추가 버튼 눌림", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.BOTTOM, 0, 0);
-                toast.show();
+                Intent intent = getIntent();
+                intent.putExtra("textname", textname.getText().toString());
+                intent.putExtra("textphone",textphone.getText().toString());
+                intent.putExtra("textemergency",textemergency.getText().toString());
+               setResult(RESULT_OK,intent);
+                finish();
             }
         });
 

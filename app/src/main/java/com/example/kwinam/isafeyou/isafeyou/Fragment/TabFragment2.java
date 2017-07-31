@@ -364,7 +364,6 @@ public class TabFragment2 extends Fragment {
                                 item1.setCanShowCallout(true);
                                 Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
                                 item1.setCalloutRightButtonImage(bitmap_i);
-
                                 String strID = String.format("pmarker%d", mMarkerID++);
 
                                 tmapview.addMarkerItem(strID, item1);

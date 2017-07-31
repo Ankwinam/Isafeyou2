@@ -36,10 +36,10 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/contact_list"
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     </ListView>
 
 </LinearLayout>
