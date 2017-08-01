@@ -1,4 +1,4 @@
-package com.example.kwinam.isafeyou.isafeyou.Fragment;
+package com.example.kwinam.isafeyou.isafeyou.Item;
 
 /**
  * Created by Taewoong on 2017-08-01.

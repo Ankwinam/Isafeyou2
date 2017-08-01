@@ -1,4 +1,4 @@
-package com.example.kwinam.isafeyou.isafeyou.Fragment;
+package com.example.kwinam.isafeyou.isafeyou.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kwinam.isafeyou.R;
+import com.example.kwinam.isafeyou.isafeyou.Item.Item;
 
 import java.util.ArrayList;
 

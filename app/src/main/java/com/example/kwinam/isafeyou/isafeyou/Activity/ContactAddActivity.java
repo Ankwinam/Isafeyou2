@@ -49,7 +49,7 @@ public class ContactAddActivity extends AppCompatActivity {
                 intent.putExtra("textname", textname.getText().toString());
                 intent.putExtra("textphone",textphone.getText().toString());
                 intent.putExtra("textemergency",textemergency.getText().toString());
-               setResult(RESULT_OK,intent);
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });

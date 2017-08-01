@@ -1,20 +1,19 @@
 package com.example.kwinam.isafeyou.isafeyou.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 
 import com.example.kwinam.isafeyou.R;
 import com.example.kwinam.isafeyou.isafeyou.Activity.ContactAddActivity;
+import com.example.kwinam.isafeyou.isafeyou.Adapter.myCustomAdapter;
+import com.example.kwinam.isafeyou.isafeyou.Item.Item;
 
 import java.util.ArrayList;
 
@@ -51,7 +50,7 @@ public class TabFragment3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_3, container, false);
-        lv = (ListView) view.findViewById(R.id.listview);
+        lv = (ListView) view.findViewById(R.id.contact_list);
         item_list = new ArrayList<Item>();
         ca = new myCustomAdapter(getActivity(), R.layout.item_layout, item_list);
         lv.setAdapter(ca);
