@@ -302,15 +302,16 @@ public class TabFragment2 extends Fragment {
 
     public void getAroundpopo() {
         TMapData tmapdata = new TMapData();
-        TMapPoint point = tmapview.getCenterPoint();
-        tmapdata.findAroundNamePOI(point, "관공서", 2, 10, new TMapData.FindAroundNamePOIListenerCallback() {
+        TMapPoint start = tmapview.getCenterPoint();
+        tmapdata.findAroundNamePOI(start, "관공서", 2, 10, new TMapData.FindAroundNamePOIListenerCallback() {
                     @Override
                     public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
                         if (poiItem == null) {
                         } else {
                             for (int i = 0; i < poiItem.size(); i++) {
                                 TMapPOIItem item = poiItem.get(i);
-                                if (item.getPOIName().contains("경찰") || item.getPOIName().contains("파출") || item.getPOIName().contains("복지") || item.getPOIName().contains("방범")) {
+
+                                if (item.getPOIName().contains("경찰") || item.getPOIName().contains("파출") || item.getPOIName().contains("복지") || item.getPOIName().contains("방범")|| item.getPOIName().contains("지구대")|| item.getPOIName().contains("치안")) {
                                     m_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
                                 }
                             }
@@ -327,7 +328,7 @@ public class TabFragment2 extends Fragment {
                                 item1.setCalloutTitle(m_mapPoint.get(i).getName());
                                 item1.setCalloutSubTitle("까지 최단경로 탐색");
                                 item1.setCanShowCallout(true);
-                                item1.setAutoCalloutVisible(true);
+                                item1.setAutoCalloutVisible(false);
 
                                 Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
                                 item1.setCalloutRightButtonImage(bitmap_i);
@@ -340,7 +341,7 @@ public class TabFragment2 extends Fragment {
                     }
                 });
 
-        tmapdata.findAroundNamePOI(point, "편의점", 2, 5,
+        tmapdata.findAroundNamePOI(start, "편의점", 2, 5,
                 new TMapData.FindAroundNamePOIListenerCallback() {
                     @Override
                     public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
@@ -366,12 +367,15 @@ public class TabFragment2 extends Fragment {
                                 Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
                                 item1.setCalloutRightButtonImage(bitmap_i);
                                 String strID = String.format("pmarker%d", mMarkerID++);
-
+                                if(i == 0){
+                                    searchRoute(tmapgps.getLocation(), point);
+                                }
                                 tmapview.addMarkerItem(strID, item1);
                             }
                         }
                     }
                 });
+
         m_mapPoint.clear();
     }
 }

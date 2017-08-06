@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".isafeyou.Activity.ContactAddActivity"></activity>
+        <activity android:name=".isafeyou.Activity.CommunityAddActivity"></activity>
+        <activity android:name=".isafeyou.Activity.WebViewActivity"></activity>
         <activity
             android:name=".isafeyou.Activity.Guide"
             android:theme="@style/Theme.AppCompat.Dialog.Alert" />
