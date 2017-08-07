@@ -31,7 +31,7 @@ public class dbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE contact (" +
-                "_id INTEGER PRIMARY KEY, " +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT, " +
                 "phone TEXT);");
         Log.d("테이블", "테이블 생성됨");

@@ -1,6 +1,8 @@
 package com.example.kwinam.isafeyou.isafeyou.Fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,10 +19,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.example.kwinam.isafeyou.R;
@@ -30,6 +34,7 @@ import com.example.kwinam.isafeyou.isafeyou.Item.Item;
 
 //SQLite
 import com.example.kwinam.isafeyou.isafeyou.DataBase.dbHelper;
+import com.google.android.gms.wallet.Cart;
 
 import java.util.ArrayList;
 
@@ -53,6 +58,8 @@ public class TabFragment3 extends Fragment {
     String sql;
     String[] result;
     Item[] resultitem;
+
+    private AlertDialog.Builder build;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,6 +105,32 @@ public class TabFragment3 extends Fragment {
         } catch (Exception e) {
             System.out.println("select Error :  " + e);
         }
+
+        //리스트 삭제
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                build = new AlertDialog.Builder(getContext());
+                build.setTitle("리스트 삭제");
+                build.setMessage("이 리스트를 삭제하시겠습니까?");
+                build.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which){
+                                Toast.makeText(getActivity(), "리스트가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+                                //db.execSQL("DELETE FROM contact WHERE _id = " + position, null);  //이부분 안됨.
+                                dialog.cancel();
+                            }
+                        });
+                build.setNegativeButton("No", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which){
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = build.create();
+                alert.show();
+
+                return true;
+            }
+        });
 
 
 //        lv = (ListView) view.findViewById(R.id.contact_list);
@@ -163,5 +196,6 @@ public class TabFragment3 extends Fragment {
                 }
         }
     }
+
 
 }
