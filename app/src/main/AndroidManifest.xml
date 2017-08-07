@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.kwinam.isafeyou">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,8 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_OWNER_DATA" />
     <uses-permission android:name="android.permission.READ_OWNER_DATA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
 
     <application
         android:allowBackup="true"
@@ -23,16 +24,17 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".isafeyou.Activity.ContactAddActivity"></activity>
-        <activity android:name=".isafeyou.Activity.CommunityAddActivity"></activity>
-        <activity android:name=".isafeyou.Activity.WebViewActivity"></activity>
+        <activity android:name=".isafeyou.Activity.ContactAddActivity" />
+        <activity android:name=".isafeyou.Activity.CommunityAddActivity" />
+        <activity android:name=".isafeyou.Activity.WebViewActivity" />
         <activity
-            android:name=".isafeyou.Activity.Guide"
+            android:name="com.example.kwinam.isafeyou.isafeyou.Activity.Guide"
             android:theme="@style/Theme.AppCompat.Dialog.Alert" />
+        <activity android:name="com.example.kwinam.isafeyou.isafeyou.Activity.SettingActivity"
+            android:label="@string/action_settings"></activity>
     </application>
 
 </manifest>

@@ -1,12 +1,15 @@
 package com.example.kwinam.isafeyou.isafeyou.Activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import com.example.kwinam.isafeyou.R;
 
@@ -18,6 +21,8 @@ public class CommunityAddActivity extends AppCompatActivity{
     private static final int SEARCH_ADDRESS_ACTIVITY = 10000;
     private EditText et_address;
     Button btn_serach;
+    TimePicker start_time;
+    boolean processed = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +34,7 @@ public class CommunityAddActivity extends AppCompatActivity{
         et_address.setEnabled(false);
         et_address.setFocusable(false);
         et_address.setFocusableInTouchMode(false);
+        start_time = (TimePicker)findViewById(R.id.timePicker);
         btn_serach = (Button)findViewById(R.id.search_address_btn);
 
         btn_serach.setOnClickListener(new View.OnClickListener(){

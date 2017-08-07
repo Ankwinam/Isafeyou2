@@ -329,19 +329,19 @@ public class TabFragment2 extends Fragment {
                                 item1.setCalloutSubTitle("까지 최단경로 탐색");
                                 item1.setCanShowCallout(true);
                                 item1.setAutoCalloutVisible(false);
-
                                 Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
                                 item1.setCalloutRightButtonImage(bitmap_i);
 
                                 String strID = String.format("pmarker%d", mMarkerID++);
 
                                 tmapview.addMarkerItem(strID, item1);
+                                m_mapPoint.clear();
                             }
                         }
                     }
                 });
-
-        tmapdata.findAroundNamePOI(start, "편의점", 2, 5,
+        m_mapPoint.clear();
+        tmapdata.findAroundNamePOI(start, "편의점", 2, 6,
                 new TMapData.FindAroundNamePOIListenerCallback() {
                     @Override
                     public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
@@ -353,6 +353,7 @@ public class TabFragment2 extends Fragment {
                             }
                             for (int i = 0; i < m_mapPoint.size(); i++) {
                                 TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(), m_mapPoint.get(i).getLongitude());
+                                TMapPoint point_near = new TMapPoint(m_mapPoint.get(0).getLatitude(), m_mapPoint.get(0).getLongitude());
                                 TMapMarkerItem item1 = new TMapMarkerItem();
                                 Bitmap bitmap = null;
                                  /* 핀 이미지 */
@@ -367,15 +368,12 @@ public class TabFragment2 extends Fragment {
                                 Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
                                 item1.setCalloutRightButtonImage(bitmap_i);
                                 String strID = String.format("pmarker%d", mMarkerID++);
-                                if(i == 0){
-                                    searchRoute(tmapgps.getLocation(), point);
-                                }
                                 tmapview.addMarkerItem(strID, item1);
+                                searchRoute(tmapgps.getLocation(), point_near);
                             }
                         }
                     }
                 });
-
         m_mapPoint.clear();
     }
 }
