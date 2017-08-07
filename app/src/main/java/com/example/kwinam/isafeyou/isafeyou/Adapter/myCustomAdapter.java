@@ -23,6 +23,15 @@ public class myCustomAdapter extends BaseAdapter {
     Context context;
     int layout;
     ArrayList<Item> alist;
+    Item[] items;
+
+    public myCustomAdapter(Context context, int layout, Item[] items){
+        this.context = context;
+        this.layout = layout;
+        this.items = items;
+        inflater = LayoutInflater.from(context);
+    }
+
     public myCustomAdapter(Context context, int layout, ArrayList<Item> alist){
         this.context = context;
         this.layout = layout;
