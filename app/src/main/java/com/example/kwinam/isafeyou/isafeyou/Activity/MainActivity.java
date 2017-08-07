@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.map_grey));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.contacts_grey));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.communication_grey));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.settings_grey));
+        //tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.settings_grey));
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -94,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
                         tab.setIcon(R.drawable.communication_pink);
                         toolbar_title.setText("커뮤니티");
                         break;
-                    case 4:
-                        tab.setIcon(R.drawable.settings_pink);
-                        toolbar_title.setText("설정");
-                        break;
+//                    case 4:
+//                        tab.setIcon(R.drawable.settings_pink);
+//                        toolbar_title.setText("설정");
+//                        break;
 
                 }
             }
@@ -117,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         tab.setIcon(R.drawable.communication_grey);
                         break;
-                    case 4:
-                        tab.setIcon(R.drawable.settings_grey);
-                        break;
+//                    case 4:
+//                        tab.setIcon(R.drawable.settings_grey);
+//                        break;
 
                 }
             }

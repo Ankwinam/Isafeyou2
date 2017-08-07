@@ -67,8 +67,7 @@ public class ContactAddActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK)
-        {
+        if(resultCode == RESULT_OK) {
             Cursor cursor = getContentResolver().query(data.getData(),
                     new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                             ContactsContract.CommonDataKinds.Phone.NUMBER}, null, null, null);

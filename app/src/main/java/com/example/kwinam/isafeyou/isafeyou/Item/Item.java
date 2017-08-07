@@ -11,7 +11,7 @@ public class Item {
 
     public Item(String name, String phonenumber, String message){
         this.name = name;
-        this. phonenumber = phonenumber;
+        this.phonenumber = phonenumber;
         this.message = message;
     }
 
