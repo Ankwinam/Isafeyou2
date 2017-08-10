@@ -43,4 +43,6 @@
             android:singleLine="true"
             android:title="기본 메세지 설정" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title=""/>
 </PreferenceScreen>

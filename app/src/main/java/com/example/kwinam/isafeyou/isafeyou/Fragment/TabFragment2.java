@@ -53,11 +53,14 @@ public class TabFragment2 extends Fragment {
     Button target;
     TMapPoint point = null;
     boolean askGPS = false;
-    private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
+    private ArrayList<MapPoint> police_mapPoint = new ArrayList<MapPoint>();
+    private ArrayList<MapPoint> store_mapPoint = new ArrayList<MapPoint>();
     private static int mMarkerID;
     private Double lat = null;
     private Double lon = null;
     private TMapData tmapdata = null;
+    double shortest = 10000000;
+    int index = 0;
 
     //
     @Override
@@ -120,7 +123,6 @@ public class TabFragment2 extends Fragment {
                 TMapPoint end = new TMapPoint(lat, lon);
                 searchRoute(start, end);
             }
-
         });
         return view;
     }
@@ -311,36 +313,36 @@ public class TabFragment2 extends Fragment {
                             for (int i = 0; i < poiItem.size(); i++) {
                                 TMapPOIItem item = poiItem.get(i);
 
-                                if (item.getPOIName().contains("경찰") || item.getPOIName().contains("파출") || item.getPOIName().contains("복지") || item.getPOIName().contains("방범")|| item.getPOIName().contains("지구대")|| item.getPOIName().contains("치안")) {
-                                    m_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
+                                if (item.getPOIName().contains("경찰") || item.getPOIName().contains("파출") || item.getPOIName().contains("방범")|| item.getPOIName().contains("지구대")|| item.getPOIName().contains("치안")) {
+                                    police_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
                                 }
                             }
-                            for (int i = 0; i < m_mapPoint.size(); i++) {
-                                TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(), m_mapPoint.get(i).getLongitude());
+                            for (int i = 0; i < police_mapPoint.size(); i++) {
+                                TMapPoint point = new TMapPoint(police_mapPoint.get(i).getLatitude(), police_mapPoint.get(i).getLongitude());
                                 TMapMarkerItem item1 = new TMapMarkerItem();
                                 Bitmap bitmap = null;
                                  /* 핀 이미지 */
-                                bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.poi_dot);
+                                bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.policeimage);
                                 item1.setTMapPoint(point);
-                                item1.setName(m_mapPoint.get(i).getName());
+                                item1.setName(police_mapPoint.get(i).getName());
                                 item1.setVisible(item1.VISIBLE);
                                 item1.setIcon(bitmap);
-                                item1.setCalloutTitle(m_mapPoint.get(i).getName());
+                                item1.setCalloutTitle(police_mapPoint.get(i).getName());
                                 item1.setCalloutSubTitle("까지 최단경로 탐색");
                                 item1.setCanShowCallout(true);
                                 item1.setAutoCalloutVisible(false);
-                                Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
+                                Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.whilte_arrow);
                                 item1.setCalloutRightButtonImage(bitmap_i);
 
                                 String strID = String.format("pmarker%d", mMarkerID++);
 
                                 tmapview.addMarkerItem(strID, item1);
-                                m_mapPoint.clear();
+                                police_mapPoint.clear();
                             }
                         }
+                        police_mapPoint.clear();
                     }
                 });
-        m_mapPoint.clear();
         tmapdata.findAroundNamePOI(start, "편의점", 2, 6,
                 new TMapData.FindAroundNamePOIListenerCallback() {
                     @Override
@@ -349,31 +351,29 @@ public class TabFragment2 extends Fragment {
                         } else {
                             for (int i = 0; i < poiItem.size(); i++) {
                                 TMapPOIItem item = poiItem.get(i);
-                                m_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
+                                store_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
                             }
-                            for (int i = 0; i < m_mapPoint.size(); i++) {
-                                TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(), m_mapPoint.get(i).getLongitude());
-                                TMapPoint point_near = new TMapPoint(m_mapPoint.get(0).getLatitude(), m_mapPoint.get(0).getLongitude());
+                            for (int i = 0; i < store_mapPoint.size(); i++) {
+                                TMapPoint point = new TMapPoint(store_mapPoint.get(i).getLatitude(), store_mapPoint.get(i).getLongitude());
                                 TMapMarkerItem item1 = new TMapMarkerItem();
                                 Bitmap bitmap = null;
                                  /* 핀 이미지 */
-                                bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.poi_dot);
+                                bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.marketimage);
                                 item1.setTMapPoint(point);
-                                item1.setName(m_mapPoint.get(i).getName());
+                                item1.setName(store_mapPoint.get(i).getName());
                                 item1.setVisible(item1.VISIBLE);
                                 item1.setIcon(bitmap);
-                                item1.setCalloutTitle(m_mapPoint.get(i).getName());
+                                item1.setCalloutTitle(store_mapPoint.get(i).getName());
                                 item1.setCalloutSubTitle("까지 최단경로 탐색");
                                 item1.setCanShowCallout(true);
-                                Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.i_go);
+                                Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.whilte_arrow);
                                 item1.setCalloutRightButtonImage(bitmap_i);
                                 String strID = String.format("pmarker%d", mMarkerID++);
                                 tmapview.addMarkerItem(strID, item1);
-                                searchRoute(tmapgps.getLocation(), point_near);
                             }
                         }
                     }
                 });
-        m_mapPoint.clear();
+        store_mapPoint.clear();
     }
 }

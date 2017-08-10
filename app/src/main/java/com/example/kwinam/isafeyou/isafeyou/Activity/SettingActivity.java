@@ -1,5 +1,7 @@
 package com.example.kwinam.isafeyou.isafeyou.Activity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.widget.ListView;
 
 import com.example.kwinam.isafeyou.R;
 
@@ -24,7 +27,6 @@ public class SettingActivity extends PreferenceActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getFragmentManager()
                 .beginTransaction()
                 .replace(android.R.id.content,
@@ -35,6 +37,9 @@ public class SettingActivity extends PreferenceActivity {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            ListView lv = getListView();
+            lv.setDivider(new ColorDrawable(Color.TRANSPARENT));
+            lv.setDividerHeight(0);
             addPreferencesFromResource(R.xml.pref_settings);
         }
     }
