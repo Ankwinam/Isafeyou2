@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -30,10 +31,11 @@ import android.widget.Toast;
 import com.example.kwinam.isafeyou.R;
 import com.example.kwinam.isafeyou.isafeyou.Activity.ContactAddActivity;
 import com.example.kwinam.isafeyou.isafeyou.Adapter.myCustomAdapter;
+import com.example.kwinam.isafeyou.isafeyou.DataBase.SQLiteAdapter;
 import com.example.kwinam.isafeyou.isafeyou.Item.Item;
 
 //SQLite
-import com.example.kwinam.isafeyou.isafeyou.DataBase.dbHelper;
+//import com.example.kwinam.isafeyou.isafeyou.DataBase.dbHelper;
 import com.google.android.gms.wallet.Cart;
 
 import java.util.ArrayList;
@@ -52,12 +54,17 @@ public class TabFragment3 extends Fragment {
     static final int REQUEST_CODE = 1234;
 
     //SQLite
-    dbHelper helper;
+    private SQLiteAdapter mySQLiteAdapter;
     SQLiteDatabase db;
     Cursor resultcursor;
     String sql;
     String[] result;
     Item[] resultitem;
+
+    SimpleCursorAdapter cursorAdapter;
+    Cursor cursor;
+
+
 
     private AlertDialog.Builder build;
 
@@ -65,12 +72,17 @@ public class TabFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_3, container, false);
 
+//        mySQLiteAdapter = new SQLiteAdapter(getContext());
+//        mySQLiteAdapter.openToWrite();
+//
+//        cursor = mySQLiteAdapter.queueAll();
+
         //SQLite
-        helper = new dbHelper(getActivity());
+        mySQLiteAdapter = new SQLiteAdapter(getActivity());
         try{
-            db = helper.getWritableDatabase(); //데이터베이스 객체를 얻기 위해 호출
+            db = mySQLiteAdapter.getWritableDatabase(); //데이터베이스 객체를 얻기 위해 호출
         } catch (SQLiteException e) {
-            db = helper.getReadableDatabase();
+            db = mySQLiteAdapter.getReadableDatabase();
         }
 
         try{
@@ -109,14 +121,47 @@ public class TabFragment3 extends Fragment {
         //리스트 삭제
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
                 build = new AlertDialog.Builder(getContext());
                 build.setTitle("리스트 삭제");
                 build.setMessage("이 리스트를 삭제하시겠습니까?");
+
+                final int pos = position;
+
+                //Log.d("포지션","포지션: "+(Cursor) parent.getItemAtPosition(position));
                 build.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which){
                                 Toast.makeText(getActivity(), "리스트가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
-                                //db.execSQL("DELETE FROM contact WHERE _id = " + position, null);  //이부분 안됨.
+
+                                //db.execSQL("DELETE FROM contact WHERE _id = position");
+                                Cursor cursor = (Cursor) parent.getItemAtPosition(position);  //캐스팅 안됨
+                                final int item_id = cursor.getInt(cursor.getColumnIndex(mySQLiteAdapter.KEY_ID));
+
+                                mySQLiteAdapter.delete_byID(item_id);
+
+
+
+//                                //Delete of record from Database and List view.
+//                                resultcursor.moveToPosition(pos);
+//                                db.delete(resultcursor.getInt(resultcursor.getColumnIndex(dbHelper.KEY_ID));
+//                                resultcursor = db.getAll();
+//                                recordCursorAdapter.swapCursor(resultcursor);
+//                                listView.setAdapter(recordCursorAdapter);
+
+
+//                                helper = new dbHelper(getActivity());
+//                                try{
+//                                    db = helper.getWritableDatabase(); //데이터베이스 객체를 얻기 위해 호출
+//                                } catch (SQLiteException e) {
+//                                    db = helper.getReadableDatabase();
+//                                }
+//                                Cursor cursor = (Cursor) parent.getItemAtPosition(pos);
+//                                final int item_id = cursor.getInt(cursor.getColumnIndex("_id"));
+//                                final int  delete = db.delete(item_id);
+//                                cursor.requery();
+
+
+
                                 dialog.cancel();
                             }
                         });
@@ -145,6 +190,8 @@ public class TabFragment3 extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
+
+
 
         return view;
     }
