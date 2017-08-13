@@ -305,7 +305,7 @@ public class TabFragment2 extends Fragment {
     public void getAroundpopo() {
         TMapData tmapdata = new TMapData();
         TMapPoint start = tmapview.getCenterPoint();
-        tmapdata.findAroundNamePOI(start, "관공서", 2, 10, new TMapData.FindAroundNamePOIListenerCallback() {
+        tmapdata.findAroundNamePOI(start, "관공서", 10, 10, new TMapData.FindAroundNamePOIListenerCallback() {//숫자 두개는 각각 거리와 개수
                     @Override
                     public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
                         if (poiItem == null) {
@@ -328,7 +328,7 @@ public class TabFragment2 extends Fragment {
                                 item1.setVisible(item1.VISIBLE);
                                 item1.setIcon(bitmap);
                                 item1.setCalloutTitle(police_mapPoint.get(i).getName());
-                                item1.setCalloutSubTitle("까지 최단경로 탐색");
+                                item1.setCalloutSubTitle("최단경로 탐색");
                                 item1.setCanShowCallout(true);
                                 item1.setAutoCalloutVisible(false);
                                 Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.whilte_arrow);

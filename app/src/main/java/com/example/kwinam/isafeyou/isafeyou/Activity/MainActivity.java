@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         //첫 실행확인
         isFirst = CheckAppFirstExecute();
         if(isFirst){
-            Intent intent = new Intent(MainActivity.this, Guide.class);
+            Intent intent = new Intent(MainActivity.this, GuideActivity.class);
             startActivity(intent);
         }
 
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         switch (keyCode) {
             //하드웨어 뒤로가기 버튼에 따른 이벤트 설정
             case KeyEvent.KEYCODE_BACK:
@@ -301,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
 //            return null;
 //        }
 //    }
+
 //앱최초실행확인 (true - 최초실행)
     public boolean CheckAppFirstExecute() {
         SharedPreferences pref = getSharedPreferences("IsFirst", Activity.MODE_PRIVATE);
@@ -310,10 +311,18 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("isFirst", true);
             editor.commit();
         }
-
         return !isFirst;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean click_3 = pref.getBoolean("click_3", false);
+        String ringtone = pref.getString("ringtone", "");
+        int time_interval = Integer.parseInt(pref.getString("time_interval", "0"));
+        String message = pref.getString("message", "도와주세요! 위급 상황입니다.");
+    }
 }
 

@@ -14,22 +14,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
-        android:text="긴급상황 발생시 2번 연속 탭 해주세요!"
+        android:text="호루라기를 누르면 경보음이 울립니다."
         android:textColor="#f3a9aa"
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/safebutton"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:contextClickable="false"-->
-        <!--app:srcCompat="@drawable/sos" />-->
-
     <com.pkmmte.view.CircularImageView
-        android:id="@+id/safebutton"
+        android:id="@+id/whistlebutton"
         android:layout_width="220dp"
         android:layout_height="220dp"
         android:layout_alignParentBottom="false"
@@ -51,14 +42,5 @@
         app:selector="true"
         app:shadow="false"
         app:srcCompat="@drawable/sos" />
-
-    <Button
-        android:id="@+id/Whistle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="호루라기"
-        android:layout_below="@+id/safebutton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
 
 </RelativeLayout>
