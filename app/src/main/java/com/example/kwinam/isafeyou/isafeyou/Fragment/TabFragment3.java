@@ -244,7 +244,6 @@ public class TabFragment3 extends Fragment {
                     } catch (Exception e) {
                         System.out.println("select Error :  " + e);
                     }
-
                     break;
                 }
         }
