@@ -5,22 +5,22 @@
             android:summary="어플리케이션 사용 방법을 확인합니다"
             android:title="가이드">
             <intent
-                android:targetClass="com.example.kwinam.isafeyou.isafeyou.Activity.Guide"
+                android:targetClass="com.example.kwinam.isafeyou.isafeyou.Activity.GuideActivity"
                 android:targetPackage="com.example.kwinam.isafeyou" />
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="기본 설정">
+    <PreferenceCategory android:title="기본설정">
         <SwitchPreference
             android:defaultValue="false"
-            android:key="3_click"
+            android:key="click_3"
             android:summary="전원버튼 세번 눌러서 위험상황 알리기 On/Off"
             android:switchTextOff="OFF"
             android:switchTextOn="ON"
             android:title="전원버튼 세번" />
         <RingtonePreference
             android:defaultValue="content://settings/system/notification_sound"
-            android:key="autoUpdate_ringtone"
+            android:key="ringtone"
             android:ringtoneType="notification"
             android:showSilent="true"
             android:title="경보음" />
@@ -34,14 +34,14 @@
             android:key="time_interval"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
-            android:title="전송 간격" />
+            android:title="전송간격" />
         <EditTextPreference
             android:defaultValue="도와주세요! 위급 상황입니다."
             android:key="message"
             android:maxLines="2"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="기본 메세지 설정" />
+            android:title="기본메세지 설정" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title=""/>

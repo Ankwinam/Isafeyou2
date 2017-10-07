@@ -32,8 +32,9 @@
         <activity android:name=".isafeyou.Activity.ContactAddActivity" />
         <activity android:name=".isafeyou.Activity.CommunityAddActivity" />
         <activity android:name=".isafeyou.Activity.WebViewActivity" />
+        <activity android:name=".isafeyou.Activity.WhistleActivity"/>
         <activity
-            android:name="com.example.kwinam.isafeyou.isafeyou.Activity.Guide"
+            android:name="com.example.kwinam.isafeyou.isafeyou.Activity.GuideActivity"
             android:theme="@style/Theme.AppCompat.Dialog.Alert" />
         <activity android:name="com.example.kwinam.isafeyou.isafeyou.Activity.SettingActivity"
             android:label="@string/action_settings"></activity>

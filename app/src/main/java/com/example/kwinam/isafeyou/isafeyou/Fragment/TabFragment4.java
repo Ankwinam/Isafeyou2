@@ -30,7 +30,6 @@ public class TabFragment4 extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-
         return view;
     }
 

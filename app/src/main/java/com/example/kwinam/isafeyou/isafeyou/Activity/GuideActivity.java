@@ -22,7 +22,7 @@ import com.example.kwinam.isafeyou.isafeyou.Fragment.GuideFragment3;
  * Created by Taewoong on 2017-08-02.
  */
 
-public class Guide extends AppCompatActivity {
+public class GuideActivity extends AppCompatActivity {
     int MAX_PAGE = 3;
     Fragment cur_fragment = new Fragment();
 
