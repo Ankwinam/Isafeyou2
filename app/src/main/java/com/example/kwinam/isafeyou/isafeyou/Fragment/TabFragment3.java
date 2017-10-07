@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -48,7 +50,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class TabFragment3 extends Fragment {
     ArrayList<Item> item_list;
-    ListView lv;
+    ListView contact_list;
     myCustomAdapter ca;
     ImageButton contactadd_btn;
     static final int REQUEST_CODE = 1234;
@@ -63,8 +65,6 @@ public class TabFragment3 extends Fragment {
 
     SimpleCursorAdapter cursorAdapter;
     Cursor cursor;
-
-
 
     private AlertDialog.Builder build;
 
@@ -105,10 +105,10 @@ public class TabFragment3 extends Fragment {
             Log.d("확인","셀렉트 성공");
             System.out.println("select ok");
 
-            lv = (ListView) view.findViewById(R.id.contact_list);
+            contact_list = (ListView) view.findViewById(R.id.contact_list);
 
             ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-            lv.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
+            contact_list.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
 
             //item_list = new ArrayList<Item>();
             //ca = new myCustomAdapter(getActivity(), R.layout.item_layout, item_list);
@@ -119,25 +119,29 @@ public class TabFragment3 extends Fragment {
         }
 
         //리스트 삭제
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        contact_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+            public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, long id) {
                 build = new AlertDialog.Builder(getContext());
                 build.setTitle("리스트 삭제");
                 build.setMessage("이 리스트를 삭제하시겠습니까?");
-
-                final int pos = position;
-
-                //Log.d("포지션","포지션: "+(Cursor) parent.getItemAtPosition(position));
                 build.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which){
-                                Toast.makeText(getActivity(), "리스트가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
-
                                 //db.execSQL("DELETE FROM contact WHERE _id = position");
-                                Cursor cursor = (Cursor) parent.getItemAtPosition(position);  //캐스팅 안됨
-                                final int item_id = cursor.getInt(cursor.getColumnIndex(mySQLiteAdapter.KEY_ID));
+                                Log.d("포지션","포지션: "+parent.getItemAtPosition(position));
 
-                                mySQLiteAdapter.delete_byID(item_id);
+                                String ss = (String) parent.getItemAtPosition(position);  //캐스팅 안됨
+                                String s[] = ss.split(" ");
+                                //Log.d("포지션","제발: "+s[0] + s[1]);
+                                //Log.d("포지션","제발2: "+s[2] + s[3]);
+                                //Cursor cursor = db.rawQuery("delete FROM "+ "contact where name='"+s[0]+"'" , null);
+                                db.delete("contact","name=?",new String[]{s[0]});
+                                refresh();
+
+                                //final int item_id = cursor.getInt(cursor.getColumnIndex(mySQLiteAdapter.KEY_ID));
+                                //mySQLiteAdapter.delete_byID(item_id);
+
+                                //db.rawQuery("SELECT * FROM contact", null);
 
 
 
@@ -160,9 +164,8 @@ public class TabFragment3 extends Fragment {
 //                                final int  delete = db.delete(item_id);
 //                                cursor.requery();
 
-
-
                                 dialog.cancel();
+                                Toast.makeText(getActivity(), "리스트가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
                             }
                         });
                 build.setNegativeButton("No", new DialogInterface.OnClickListener(){
@@ -178,10 +181,10 @@ public class TabFragment3 extends Fragment {
         });
 
 
-//        lv = (ListView) view.findViewById(R.id.contact_list);
+//        contact_list = (ListView) view.findViewById(R.id.contact_list);
 //        item_list = new ArrayList<Item>();
 //        ca = new myCustomAdapter(getActivity(), R.layout.item_layout, item_list);
-//        lv.setAdapter(ca);
+//        contact_list.setAdapter(ca);
         contactadd_btn = (ImageButton) view.findViewById(R.id.contact_add_btn);
         contactadd_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,11 +194,14 @@ public class TabFragment3 extends Fragment {
             }
         });
 
-
-
         return view;
     }
 
+    private void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.detach(this).attach(this).commit();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -233,16 +239,14 @@ public class TabFragment3 extends Fragment {
                         System.out.println("select ok" );
 
                         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                        lv.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
+                        contact_list.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
 
                     } catch (Exception e) {
                         System.out.println("select Error :  " + e);
                     }
-
                     break;
                 }
         }
     }
-
 
 }

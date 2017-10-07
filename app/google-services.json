@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1035493108025",
+    "firebase_url": "https://isafeyou-1bc41.firebaseio.com",
+    "project_id": "isafeyou-1bc41",
+    "storage_bucket": "isafeyou-1bc41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035493108025:android:4f2e08b28ed2e43d",
+        "android_client_info": {
+          "package_name": "com.example.kwinam.isafeyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035493108025-cdvpl9cnn2oemc6piik0m8mt063kna51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kwinam.isafeyou",
+            "certificate_hash": "31b1c9d7f9a16e5c52b2e9ab0a8c64275189f37e"
+          }
+        },
+        {
+          "client_id": "1035493108025-lm5r16pi3i7frl1ers0q9k4jjr9alq2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kwinam.isafeyou",
+            "certificate_hash": "db7f7f06277649cc190f1615c89359b1d739a90b"
+          }
+        },
+        {
+          "client_id": "1035493108025-k660r7nqh0ctb7b94hrcvt54mrq76m7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2qXrMjE-Rap0lNH37xqJkfyqN6QqNswU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035493108025-k660r7nqh0ctb7b94hrcvt54mrq76m7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
