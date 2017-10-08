@@ -60,4 +60,10 @@ public class WhistleActivity extends AppCompatActivity{
             }
         });
     }
+
+    @Override
+    protected void onStop() {
+        sound.stop(streamId);
+        super.onStop();
+    }
 }

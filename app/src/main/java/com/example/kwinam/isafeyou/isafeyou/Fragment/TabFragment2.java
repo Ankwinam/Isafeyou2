@@ -89,7 +89,7 @@ public class TabFragment2 extends Fragment {
             public void onClick(View v) {
                 point = tmapgps.getLocation();
                 if(point.getLongitude()<120){
-                    Toast.makeText(getActivity(), "GPS 신호를 찾는중 입니다. \n실내 환경에서는 다소 지연될 수 있습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "GPS 신호를 찾는중 입니다. \n만약 GPS가 꺼져있다면 켜 주세요.", Toast.LENGTH_LONG).show();
                 }
                 tmapview.setCenterPoint(point.getLongitude(), point.getLatitude());
                 tmapview.setZoomLevel(15);
@@ -211,7 +211,6 @@ public class TabFragment2 extends Fragment {
         public void onProviderDisabled(String provider) {
             if (!askGPS) {
                 askGPS = true;
-                showSettingsAlert();
             }
         }
 
