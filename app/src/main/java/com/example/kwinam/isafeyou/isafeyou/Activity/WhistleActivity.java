@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.kwinam.isafeyou.R;
 import com.pkmmte.view.CircularImageView;
 
@@ -28,10 +28,12 @@ public class WhistleActivity extends AppCompatActivity{
     TextView tv;
     CircularImageView whistle;
     AudioManager audio;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.whistle);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sound = new SoundPool.Builder().setMaxStreams(1).build();
         } else {
@@ -44,6 +46,8 @@ public class WhistleActivity extends AppCompatActivity{
         whistle.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                audio.setMode(AudioManager.MODE_IN_COMMUNICATION);
+                audio.setSpeakerphoneOn(true);
                 if(!clicked){
                     audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                     audio.setStreamVolume(AudioManager.STREAM_MUSIC,
