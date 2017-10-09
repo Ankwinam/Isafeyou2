@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +87,7 @@ public class TabFragment3 extends Fragment {
             db = mySQLiteAdapter.getReadableDatabase();
         }
 
+        //연락처 출력
         try{
             sql = "SELECT * FROM contact";
             resultcursor = db.rawQuery(sql, null);
@@ -96,23 +99,18 @@ public class TabFragment3 extends Fragment {
             for(int i = 0; i < count; i++){
                 resultcursor.moveToNext(); //첫번째에서 다음 레코드가 없을때까지 읽음
                 String str_name = resultcursor.getString(1); //첫번째 속성
-                String str_phone = resultcursor.getString(2); //두번째 속성
-                result[i] = str_name + "    " + str_phone; //각각의 속성들을 해당 배열의 i열에 저장
+                String str_phone = resultcursor.getString(2).replace("-",""); //두번째 속성
+                result[i] = str_name + "         " + str_phone; //각각의 속성들을 해당 배열의 i열에 저장
                 //resultitem[i].setName(str_name);
                 //resultitem[i].setPhonenumber(str_phone);
-
             }
-            Log.d("확인","셀렉트 성공");
-            System.out.println("select ok");
-
             contact_list = (ListView) view.findViewById(R.id.contact_list);
-
             ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
             contact_list.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
 
             //item_list = new ArrayList<Item>();
             //ca = new myCustomAdapter(getActivity(), R.layout.item_layout, item_list);
-            //lv.setAdapter(ca);
+            //contact_list.setAdapter(ca);
 
         } catch (Exception e) {
             System.out.println("select Error :  " + e);
@@ -127,42 +125,13 @@ public class TabFragment3 extends Fragment {
                 build.setMessage("이 리스트를 삭제하시겠습니까?");
                 build.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which){
-                                //db.execSQL("DELETE FROM contact WHERE _id = position");
-                                Log.d("포지션","포지션: "+parent.getItemAtPosition(position));
+                                //Log.d("포지션","포지션: "+parent.getItemAtPosition(position));
 
-                                String ss = (String) parent.getItemAtPosition(position);  //캐스팅 안됨
+                                String ss = (String) parent.getItemAtPosition(position);
                                 String s[] = ss.split(" ");
-                                //Log.d("포지션","제발: "+s[0] + s[1]);
-                                //Log.d("포지션","제발2: "+s[2] + s[3]);
-                                //Cursor cursor = db.rawQuery("delete FROM "+ "contact where name='"+s[0]+"'" , null);
+
                                 db.delete("contact","name=?",new String[]{s[0]});
-                                refresh();
-
-                                //final int item_id = cursor.getInt(cursor.getColumnIndex(mySQLiteAdapter.KEY_ID));
-                                //mySQLiteAdapter.delete_byID(item_id);
-
-                                //db.rawQuery("SELECT * FROM contact", null);
-
-
-
-//                                //Delete of record from Database and List view.
-//                                resultcursor.moveToPosition(pos);
-//                                db.delete(resultcursor.getInt(resultcursor.getColumnIndex(dbHelper.KEY_ID));
-//                                resultcursor = db.getAll();
-//                                recordCursorAdapter.swapCursor(resultcursor);
-//                                listView.setAdapter(recordCursorAdapter);
-
-
-//                                helper = new dbHelper(getActivity());
-//                                try{
-//                                    db = helper.getWritableDatabase(); //데이터베이스 객체를 얻기 위해 호출
-//                                } catch (SQLiteException e) {
-//                                    db = helper.getReadableDatabase();
-//                                }
-//                                Cursor cursor = (Cursor) parent.getItemAtPosition(pos);
-//                                final int item_id = cursor.getInt(cursor.getColumnIndex("_id"));
-//                                final int  delete = db.delete(item_id);
-//                                cursor.requery();
+                                refresh();  //리스트 갱신
 
                                 dialog.cancel();
                                 Toast.makeText(getActivity(), "리스트가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -185,7 +154,9 @@ public class TabFragment3 extends Fragment {
 //        item_list = new ArrayList<Item>();
 //        ca = new myCustomAdapter(getActivity(), R.layout.item_layout, item_list);
 //        contact_list.setAdapter(ca);
-        contactadd_btn = (ImageButton) view.findViewById(R.id.contact_add_btn);
+
+        //연락처 추가 버튼튼
+       contactadd_btn = (FloatingActionButton) view.findViewById(R.id.contact_add_btn);
         contactadd_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,9 +168,8 @@ public class TabFragment3 extends Fragment {
         return view;
     }
 
-    private void refresh(){
+    private void refresh(){  //리스트 갱신
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-
         ft.detach(this).attach(this).commit();
     }
 
@@ -218,32 +188,28 @@ public class TabFragment3 extends Fragment {
                     //item_list.add(item);
                     //ca.notifyDataSetChanged();
 
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("SELECT * FROM contact ");
+                    sb.append("WHERE name='");
+                    sb.append(textname);
+                    sb.append("' and phone='");
+                    sb.append(textphone);
+                    sb.append("';");
                     //SQLite
-                    db.execSQL("INSERT INTO contact VALUES(null, '"+ textname +"','"+ textphone +"');");
+                    Cursor cursor = db.rawQuery(sb.toString(), null);
+                    Log.d("select", cursor.getCount()+"");
+                    if(cursor != null & cursor.getCount() > 0) {
+                        Toast.makeText(getActivity().getBaseContext(), "중복이다", Toast.LENGTH_SHORT).show();
+                    } else {
+                        db.execSQL("INSERT INTO contact VALUES(null, '"+ textname +"','"+ textphone +"');");
+                    }
+                    //db.execSQL("INSERT INTO contact VALUES(null, '"+ textname +"','"+ textphone +"');");
                     Log.d("테이블", "인서트");
 
+                    refresh();  //리스트 갱신
 
-                    try{
-                        sql = "SELECT * FROM contact";
-                        resultcursor = db.rawQuery(sql, null);
+                    db.close();
 
-                        int count = resultcursor.getCount(); //db 데이터 개수
-                        result = new String[count];
-
-                        for(int i = 0; i < count; i++){
-                            resultcursor.moveToNext(); //첫번째에서 다음 레코드가 없을때까지 읽음
-                            String str_name = resultcursor.getString(1); //첫번째 속성
-                            String str_phone = resultcursor.getString(2); //두번째 속성
-                            result[i] = str_name + "    " + str_phone; //각각의 속성들을 해당 배열의 i열에 저장
-                        }
-                        System.out.println("select ok" );
-
-                        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, result);   // ArrayAdapter(this, 출력모양, 배열)
-                        contact_list.setAdapter(adapter);   // listView 객체에 Adapter를 붙인다
-
-                    } catch (Exception e) {
-                        System.out.println("select Error :  " + e);
-                    }
                     break;
                 }
         }

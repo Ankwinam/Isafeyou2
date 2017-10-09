@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         tab.setIcon(R.drawable.contacts_pink);
-                        toolbar_title.setText("연락 목록");
+                        toolbar_title.setText("지키미");
                         break;
                     case 3:
                         tab.setIcon(R.drawable.communication_pink);
@@ -197,110 +197,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    //    /**
-//     * A placeholder fragment containing a simple view.
-//     */
-//    public static class PlaceholderFragment extends Fragment {
-//        /**
-//         * The fragment argument representing the section number for this
-//         * fragment.
-//         */
-//        private static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        public PlaceholderFragment() {
-//        }
-//
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         */
-//        public static PlaceholderFragment newInstance(int sectionNumber) {
-//            PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//            fragment.setArguments(args);
-//            return fragment;
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_1, container, false);
-//
-//
-//            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
-//                Fragment fragment1 = new Fragment();
-//                FragmentManager fragmentManager = getFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(android.R.id.content, fragment1);
-//                fragmentTransaction.commit();
-//                //View View2 = inflater.inflate(R.layout.fragment_2, container, false);
-//                //return View2;
-//            }
-//            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
-//                View View3 = inflater.inflate(R.layout.fragment_3, container, false);
-//                return View3;
-//            }
-//            if(getArguments().getInt(ARG_SECTION_NUMBER) == 4) {
-//                View View4 = inflater.inflate(R.layout.fragment_4, container, false);
-//                return View4;
-//            }
-//            if(getArguments().getInt(ARG_SECTION_NUMBER) == 5) {
-//                View View5 = inflater.inflate(R.layout.fragment_5, container, false);
-//                return View5;
-//            }
-//            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-//
-//            ImageButton safebutton = (ImageButton)rootView.findViewById(R.id.safebutton);
-//
-//
-//            return rootView;
-//
-//        }
-//    }
-//
-//    /**
-//     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-//     * one of the sections/tabs/pages.
-//     */
-//    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-//
-//        public SectionsPagerAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int position) {
-//            // getItem is called to instantiate the fragment for the given page.
-//            // Return a PlaceholderFragment (defined as a static inner class below).
-//            return PlaceholderFragment.newInstance(position + 1);
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            // Show 5 total pages.
-//            return 5;
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            switch (position) {
-//                case 0:
-//                    return "메인";
-//                case 1:
-//                    return "지도";
-//                case 2:
-//                    return "연락목록";
-//                case 3:
-//                    return "커뮤니티";
-//                case 4:
-//                    return "설정";
-//            }
-//            return null;
-//        }
-//    }
 
 //앱최초실행확인 (true - 최초실행)
     public boolean CheckAppFirstExecute() {

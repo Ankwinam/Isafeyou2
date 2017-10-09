@@ -42,18 +42,25 @@ public class ContactAddActivity extends AppCompatActivity {
         textphone = (TextView)findViewById(R.id.contactadd_phoneinput);
         textemergency = (TextView)findViewById(R.id.contactadd_messageinput);
 
+        //연락처 추가 버튼
         add_decision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                intent.putExtra("textname", textname.getText().toString());
-                intent.putExtra("textphone",textphone.getText().toString());
-                intent.putExtra("textemergency",textemergency.getText().toString());
-                setResult(RESULT_OK,intent);
-                finish();
+                if(!textname.getText().toString().isEmpty() && !textphone.getText().toString().isEmpty()) {
+                    Intent intent = getIntent();
+                    intent.putExtra("textname", textname.getText().toString());
+                    intent.putExtra("textphone", textphone.getText().toString());
+                    intent.putExtra("textemergency", textemergency.getText().toString());
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "연락처를 입력하세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
+        //연락처 목록 불러오기 버튼
         contact_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

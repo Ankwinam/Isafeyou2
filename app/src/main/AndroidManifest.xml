@@ -29,10 +29,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".isafeyou.Activity.ContactAddActivity" />
-        <activity android:name=".isafeyou.Activity.CommunityAddActivity" />
-        <activity android:name=".isafeyou.Activity.WebViewActivity" />
-        <activity android:name=".isafeyou.Activity.WhistleActivity"/>
+        <activity
+            android:name=".isafeyou.Activity.ContactAddActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".isafeyou.Activity.CommunityAddActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".isafeyou.Activity.WebViewActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".isafeyou.Activity.WhistleActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.example.kwinam.isafeyou.isafeyou.Activity.GuideActivity"
             android:theme="@style/Theme.AppCompat.Dialog.Alert" />
