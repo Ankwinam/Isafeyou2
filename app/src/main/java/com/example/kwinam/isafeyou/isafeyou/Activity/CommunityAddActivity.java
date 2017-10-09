@@ -34,7 +34,6 @@ public class CommunityAddActivity extends AppCompatActivity{
         et_address.setEnabled(false);
         et_address.setFocusable(false);
         et_address.setFocusableInTouchMode(false);
-        start_time = (TimePicker)findViewById(R.id.timePicker);
         btn_serach = (Button)findViewById(R.id.search_address_btn);
 
         btn_serach.setOnClickListener(new View.OnClickListener(){

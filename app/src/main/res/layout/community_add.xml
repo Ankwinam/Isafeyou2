@@ -32,7 +32,7 @@
                 android:layout_height="35dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/pin"
-                android:id="@+id/address_result_btn"
+                android:id="@+id/search_address_btn"
                 android:layout_alignTop="@+id/address_result"
                 android:background="@android:color/transparent"/>
 
