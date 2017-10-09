@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 
 import com.example.kwinam.isafeyou.R;
@@ -20,7 +21,7 @@ import com.example.kwinam.isafeyou.R;
 public class CommunityAddActivity extends AppCompatActivity{
     private static final int SEARCH_ADDRESS_ACTIVITY = 10000;
     private EditText et_address;
-    Button btn_serach;
+    ImageButton btn_serach;
     TimePicker start_time;
     boolean processed = true;
 
@@ -34,7 +35,7 @@ public class CommunityAddActivity extends AppCompatActivity{
         et_address.setEnabled(false);
         et_address.setFocusable(false);
         et_address.setFocusableInTouchMode(false);
-        btn_serach = (Button)findViewById(R.id.search_address_btn);
+        btn_serach = (ImageButton)findViewById(R.id.search_address_btn);
 
         btn_serach.setOnClickListener(new View.OnClickListener(){
             @Override
