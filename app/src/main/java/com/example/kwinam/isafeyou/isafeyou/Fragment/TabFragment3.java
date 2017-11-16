@@ -199,7 +199,7 @@ public class TabFragment3 extends Fragment {
                     Cursor cursor = db.rawQuery(sb.toString(), null);
                     Log.d("select", cursor.getCount()+"");
                     if(cursor != null & cursor.getCount() > 0) {
-                        Toast.makeText(getActivity().getBaseContext(), "중복이다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getBaseContext(), "이미 존재합니다", Toast.LENGTH_SHORT).show();
                     } else {
                         db.execSQL("INSERT INTO contact VALUES(null, '"+ textname +"','"+ textphone +"');");
                     }
