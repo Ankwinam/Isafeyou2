@@ -44,11 +44,23 @@ public class TabFragment4 extends ListFragment {
         adapter = new CommunityAdapter();
         setListAdapter(adapter);
         // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "Box", "Account Box Black 36dp") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트1", "가나다라") ;
         // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.call_police), "Circle", "Account Circle Black 36dp") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트2", "ABCD") ;
         // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.cast_abc_scrubber_control_off_mtrl_alpha), "Ind", "Assignment Ind Black 36dp") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.box), "테스트3", "룰루") ;
+
 
         return view;
     }
