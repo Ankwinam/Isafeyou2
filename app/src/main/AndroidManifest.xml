@@ -49,6 +49,9 @@
             android:theme="@style/Theme.AppCompat.Dialog.Alert" />
         <activity android:name="com.example.kwinam.isafeyou.isafeyou.Activity.SettingActivity"
             android:label="@string/action_settings"></activity>
+        <activity
+            android:name=".isafeyou.Activity.FireBaseCommunity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
