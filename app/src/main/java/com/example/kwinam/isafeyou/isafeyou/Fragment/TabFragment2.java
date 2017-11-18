@@ -25,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -52,7 +51,7 @@ public class TabFragment2 extends Fragment {
     private static String mApiKey = "441b40f8-11f4-38af-a21f-2b2a0e57bf21"; // 발급받은 appKey
     public static LocationManager lm = null;
     Button target;
-    public TMapPoint point = null;
+    TMapPoint point = null;
     boolean askGPS = false;
     private ArrayList<MapPoint> police_mapPoint = new ArrayList<MapPoint>();
     private ArrayList<MapPoint> store_mapPoint = new ArrayList<MapPoint>();
@@ -60,6 +59,7 @@ public class TabFragment2 extends Fragment {
     private Double lat = null;
     private Double lon = null;
     private TMapData tmapdata = null;
+    double shortest = 10000000;
     int index = 0;
 
     //
@@ -75,8 +75,7 @@ public class TabFragment2 extends Fragment {
         }
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //User has previously accepted this permission
-            if (ActivityCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 startGPS();
             }
         } else {
@@ -89,8 +88,7 @@ public class TabFragment2 extends Fragment {
             public void onClick(View v) {
                 point = tmapgps.getLocation();
                 if(point.getLongitude()<120){
-                    Toast.makeText(getActivity(), "GPS 신호를 찾는중 입니다. \n만약 GPS가 꺼져있다면 켜 주세요.", Toast.LENGTH_LONG).show();
-                    showSettingsAlert();
+                    Toast.makeText(getActivity(), "GPS 신호를 찾는중 입니다. \n실내 환경에서는 다소 지연될 수 있습니다.", Toast.LENGTH_LONG).show();
                 }
                 tmapview.setCenterPoint(point.getLongitude(), point.getLatitude());
                 tmapview.setZoomLevel(15);
@@ -134,6 +132,7 @@ public class TabFragment2 extends Fragment {
         super.onStop();
     }
 
+
     @Override
     public void onResume() {
         startGPS();
@@ -150,7 +149,6 @@ public class TabFragment2 extends Fragment {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
                 // Show an expanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -193,16 +191,16 @@ public class TabFragment2 extends Fragment {
             if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
                 //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
                 double longitude = location.getLongitude();    //경도
-                double latitude = location.getLatitude();      //위도
-                float accuracy = location.getAccuracy();       //신뢰도
+                double latitude = location.getLatitude();         //위도
+                float accuracy = location.getAccuracy();        //신뢰도
                 //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
                 //Network 위치제공자에 의한 위치변화
                 //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
                 tmapview.setLocationPoint(longitude, latitude);
             } else if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
                 double longitude = location.getLongitude();    //경도
-                double latitude = location.getLatitude();      //위도
-                float accuracy = location.getAccuracy();       //신뢰도
+                double latitude = location.getLatitude();         //위도
+                float accuracy = location.getAccuracy();        //신뢰도
                 tmapview.setLocationPoint(longitude, latitude);
                 tmapview.setCenterPoint(longitude, latitude);
             }
@@ -211,6 +209,7 @@ public class TabFragment2 extends Fragment {
         public void onProviderDisabled(String provider) {
             if (!askGPS) {
                 askGPS = true;
+                showSettingsAlert();
             }
         }
 
@@ -227,8 +226,7 @@ public class TabFragment2 extends Fragment {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
 
         alertDialog.setTitle("GPS 사용유무셋팅");
-        alertDialog.setMessage("GPS 꺼져있을 수도 있습니다. Setting을 눌러서 켜주세요\n" +
-                "만약 이미 켜져있는데 이 창이 뜬다면 Cancel을 누른뒤 잠시 기다려주세요.");
+        alertDialog.setMessage("GPS 셋팅이 되지 않았을수도 있습니다.\n 설정창으로 가시겠습니까?");
 
         // OK 를 누르게 되면 설정창으로 이동합니다.
         alertDialog.setPositiveButton("Settings",
@@ -306,43 +304,43 @@ public class TabFragment2 extends Fragment {
         TMapData tmapdata = new TMapData();
         TMapPoint start = tmapview.getCenterPoint();
         tmapdata.findAroundNamePOI(start, "관공서", 10, 10, new TMapData.FindAroundNamePOIListenerCallback() {//숫자 두개는 각각 거리와 개수
-                    @Override
-                    public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
-                        if (poiItem == null) {
-                        } else {
-                            for (int i = 0; i < poiItem.size(); i++) {
-                                TMapPOIItem item = poiItem.get(i);
+            @Override
+            public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                if (poiItem == null) {
+                } else {
+                    for (int i = 0; i < poiItem.size(); i++) {
+                        TMapPOIItem item = poiItem.get(i);
 
-                                if (item.getPOIName().contains("경찰") || item.getPOIName().contains("파출") || item.getPOIName().contains("방범")|| item.getPOIName().contains("지구대")|| item.getPOIName().contains("치안")) {
-                                    police_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
-                                }
-                            }
-                            for (int i = 0; i < police_mapPoint.size(); i++) {
-                                TMapPoint point = new TMapPoint(police_mapPoint.get(i).getLatitude(), police_mapPoint.get(i).getLongitude());
-                                TMapMarkerItem item1 = new TMapMarkerItem();
-                                Bitmap bitmap = null;
-                                 /* 핀 이미지 */
-                                bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.policeimage);
-                                item1.setTMapPoint(point);
-                                item1.setName(police_mapPoint.get(i).getName());
-                                item1.setVisible(item1.VISIBLE);
-                                item1.setIcon(bitmap);
-                                item1.setCalloutTitle(police_mapPoint.get(i).getName());
-                                item1.setCalloutSubTitle("최단경로 탐색");
-                                item1.setCanShowCallout(true);
-                                item1.setAutoCalloutVisible(false);
-                                Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.whilte_arrow);
-                                item1.setCalloutRightButtonImage(bitmap_i);
-
-                                String strID = String.format("pmarker%d", mMarkerID++);
-
-                                tmapview.addMarkerItem(strID, item1);
-                                police_mapPoint.clear();
-                            }
+                        if (item.getPOIName().contains("경찰") || item.getPOIName().contains("파출") || item.getPOIName().contains("방범")|| item.getPOIName().contains("지구대")|| item.getPOIName().contains("치안")) {
+                            police_mapPoint.add(new MapPoint(item.getPOIName(), item.getPOIPoint().getLatitude(), item.getPOIPoint().getLongitude()));
                         }
+                    }
+                    for (int i = 0; i < police_mapPoint.size(); i++) {
+                        TMapPoint point = new TMapPoint(police_mapPoint.get(i).getLatitude(), police_mapPoint.get(i).getLongitude());
+                        TMapMarkerItem item1 = new TMapMarkerItem();
+                        Bitmap bitmap = null;
+                                 /* 핀 이미지 */
+                        bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.policeimage);
+                        item1.setTMapPoint(point);
+                        item1.setName(police_mapPoint.get(i).getName());
+                        item1.setVisible(item1.VISIBLE);
+                        item1.setIcon(bitmap);
+                        item1.setCalloutTitle(police_mapPoint.get(i).getName());
+                        item1.setCalloutSubTitle("최단경로 탐색");
+                        item1.setCanShowCallout(true);
+                        item1.setAutoCalloutVisible(false);
+                        Bitmap bitmap_i = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.whilte_arrow);
+                        item1.setCalloutRightButtonImage(bitmap_i);
+
+                        String strID = String.format("pmarker%d", mMarkerID++);
+
+                        tmapview.addMarkerItem(strID, item1);
                         police_mapPoint.clear();
                     }
-                });
+                }
+                police_mapPoint.clear();
+            }
+        });
         tmapdata.findAroundNamePOI(start, "편의점", 2, 6,
                 new TMapData.FindAroundNamePOIListenerCallback() {
                     @Override

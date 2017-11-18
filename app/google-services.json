@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1035493108025-bv35d0teo3310r1gd6osqbdsqfn2ht3j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kwinam.isafeyou",
+            "certificate_hash": "b9a02c203c44d19bb2c93f2bf5bee54c71be0fc6"
+          }
+        },
+        {
           "client_id": "1035493108025-cdvpl9cnn2oemc6piik0m8mt063kna51.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -1,12 +1,17 @@
 package com.example.kwinam.isafeyou.isafeyou.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
@@ -23,6 +28,8 @@ import android.widget.TextView;
 import com.example.kwinam.isafeyou.R;
 import com.example.kwinam.isafeyou.isafeyou.Adapter.TabPagerAdapter;
 
+import static com.example.kwinam.isafeyou.isafeyou.Fragment.TabFragment2.MY_PERMISSIONS_REQUEST_LOCATION;
+
 public class MainActivity extends AppCompatActivity {
 
     //private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -37,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //User has previously accepted this permission
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            }
+        } else {
+            //Not in api-23, no need to prompt
+        }
         //첫 실행확인
         isFirst = CheckAppFirstExecute();
         if(isFirst){
@@ -219,6 +236,36 @@ public class MainActivity extends AppCompatActivity {
         String ringtone = pref.getString("ringtone", "");
         int time_interval = Integer.parseInt(pref.getString("time_interval", "0"));
         String message = pref.getString("message", "도와주세요! 위급 상황입니다.");
+    }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                //  TODO: Prompt with explanation!
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 

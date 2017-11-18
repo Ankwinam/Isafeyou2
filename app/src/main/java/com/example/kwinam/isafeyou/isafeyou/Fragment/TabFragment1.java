@@ -9,6 +9,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.telephony.SmsManager;
@@ -35,6 +37,10 @@ public class TabFragment1 extends Fragment {
     boolean askGPS = false;
     double longitude = 0;
     double latitude = 0;
+    private static final long DOUBLE_PRESS_INTERVAL = 250;
+    private long lastPressTIme;
+
+    private boolean mHasDoubleClicked = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,17 +65,31 @@ public class TabFragment1 extends Fragment {
         safebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    sendSMS("01051436822");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                long pressTime = System.currentTimeMillis();
+                if(pressTime - lastPressTIme <= DOUBLE_PRESS_INTERVAL){
+                    try {
+                        sendSMS("01051436822");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    mHasDoubleClicked = false;
+                    Handler myHandler = new Handler(){
+                        public void handleMessage(Message m){
+                            if(!mHasDoubleClicked){
+                            }
+                        }
+                    };
+                    Message m = new Message();
+                    myHandler.sendMessageDelayed(m,DOUBLE_PRESS_INTERVAL);
                 }
+                lastPressTIme = pressTime;
             }
         });
         return view;
     }
 
-    protected void sendSMS(String phoneNo) throws InterruptedException {
+    public void sendSMS(String phoneNo) throws InterruptedException {
         String messageURL = "https://www.google.co.kr/maps/search/" + latitude + "+" + longitude;
         String message ="이태웅님이 위의 장소에서 위험에 처했습니다! \n 도와주세요!";
         SmsManager smsManager = SmsManager.getDefault();
