@@ -63,7 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    android:background="#ffffff"
+                    android:src="@drawable/contact" />
 
                 <TextView
                     android:id="@+id/contactadd_name"
@@ -126,14 +127,18 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <Button
                     android:id="@+id/add_decision_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
                     android:layout_marginTop="50dp"
                     android:layout_weight="1"
-                    android:background="#ffffff"
-                    app:srcCompat="@android:drawable/ic_input_add" />
+                    android:background="@drawable/buttonnn"
+                    android:text="추가"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

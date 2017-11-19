@@ -59,6 +59,9 @@
         android:text="호루라기"
         android:layout_below="@+id/safebutton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="45dp"
+        android:background="@drawable/buttonnn"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
 </RelativeLayout>
