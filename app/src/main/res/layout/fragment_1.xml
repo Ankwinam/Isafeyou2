@@ -19,13 +19,13 @@
         android:textStyle="bold" />
 
     <!--<ImageButton-->
-        <!--android:id="@+id/safebutton"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:contextClickable="false"-->
-        <!--app:srcCompat="@drawable/sos" />-->
+    <!--android:id="@+id/safebutton"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:contextClickable="false"-->
+    <!--app:srcCompat="@drawable/sos" />-->
 
     <com.pkmmte.view.CircularImageView
         android:id="@+id/safebutton"
@@ -63,6 +63,5 @@
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold" />
-        android:layout_marginTop="45dp" />
 
 </RelativeLayout>

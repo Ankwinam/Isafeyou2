@@ -124,19 +124,19 @@ public class TabFragment3 extends Fragment {
                 build.setTitle("리스트 삭제");
                 build.setMessage("이 리스트를 삭제하시겠습니까?");
                 build.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which){
-                                //Log.d("포지션","포지션: "+parent.getItemAtPosition(position));
+                    public void onClick(DialogInterface dialog, int which){
+                        //Log.d("포지션","포지션: "+parent.getItemAtPosition(position));
 
-                                String ss = (String) parent.getItemAtPosition(position);
-                                String s[] = ss.split(" ");
+                        String ss = (String) parent.getItemAtPosition(position);
+                        String s[] = ss.split(" ");
 
-                                db.delete("contact","name=?",new String[]{s[0]});
-                                refresh();  //리스트 갱신
+                        db.delete("contact","name=?",new String[]{s[0]});
+                        refresh();  //리스트 갱신
 
-                                dialog.cancel();
-                                Toast.makeText(getActivity(), "리스트가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        dialog.cancel();
+                        Toast.makeText(getActivity(), "리스트가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 build.setNegativeButton("No", new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
                         dialog.cancel();
@@ -156,10 +156,11 @@ public class TabFragment3 extends Fragment {
 //        contact_list.setAdapter(ca);
 
         //연락처 추가 버튼튼
-       contactadd_btn = (FloatingActionButton) view.findViewById(R.id.contact_add_btn);
+        contactadd_btn = (FloatingActionButton) view.findViewById(R.id.contact_add_btn);
         contactadd_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("번호", "ddfgdg");
                 Intent intent = new Intent(getContext(), ContactAddActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
