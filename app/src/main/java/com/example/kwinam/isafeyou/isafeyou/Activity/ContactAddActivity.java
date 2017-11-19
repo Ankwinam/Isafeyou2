@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import com.google.android.gms.vision.text.Text;
 
 public class ContactAddActivity extends AppCompatActivity {
 
-    Button add_decision;
+    ImageButton add_decision;
     ImageButton contact_plus;
 
     String name = null;
@@ -36,7 +35,7 @@ public class ContactAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_add);
 
-        add_decision = (Button)findViewById(R.id.add_decision_btn);
+        add_decision = (ImageButton)findViewById(R.id.add_decision_btn);
         contact_plus = (ImageButton)findViewById(R.id.contact_plus);
 
         textname = (TextView)findViewById(R.id.contactadd_nameinput);

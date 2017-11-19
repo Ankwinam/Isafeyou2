@@ -36,30 +36,11 @@
             <!--android:layout_weight="1"-->
             <!--android:layout_height="wrap_content"/>-->
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="false"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="150dp"
-        android:gravity="center"
-        android:text="채팅방에 입장하여\n서로가 아는 안심 정보를 공유해 보세요!"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
     <Button
         android:id="@+id/fireBasebutton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:background="@drawable/buttonnn"
-        android:text="채팅방 입장"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:text="채팅방생성" />
 
     <!--</LinearLayout>-->
 

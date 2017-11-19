@@ -247,6 +247,14 @@ public class TabFragment2 extends Fragment {
         alertDialog.show();
     }
 
+    public double getlongtitude(){
+        return tmapgps.getLocation().getLongitude();
+    }
+
+    public double getlatitude(){
+        return tmapgps.getLocation().getLatitude();
+    }
+
     public void startGPS() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

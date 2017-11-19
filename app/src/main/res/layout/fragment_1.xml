@@ -63,5 +63,6 @@
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold" />
+        android:layout_marginTop="45dp" />
 
 </RelativeLayout>

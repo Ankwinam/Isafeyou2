@@ -66,10 +66,6 @@ public class CommunityAddActivity extends AppCompatActivity{
         unfocusable(time);
         btn_serach = (ImageButton)findViewById(R.id.search_address_btn);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.community_add_abs);
-
         btn_serach.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

@@ -72,7 +72,6 @@ public class FireBaseCommunity extends AppCompatActivity implements View.OnClick
 
     // Views
     private ListView mListView; // 채팅메시지를 표시하는 리스트뷰
-    private EditText mEdtMessage; // 채팅메시지를 입력하는 뷰
     private SignInButton mBtnGoogleSignIn; // 로그인 버튼
     private Button mBtnGoogleSignOut; // 로그아웃 버튼
     private TextView mTxtProfileInfo; // 사용자 정보 표시
@@ -97,32 +96,7 @@ public class FireBaseCommunity extends AppCompatActivity implements View.OnClick
         mListView = (ListView) findViewById(R.id.list_message);
         mAdapter = new ChatAdapter(this, 0);
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final ChatData chatData = mAdapter.getItem(position);
-                if (!TextUtils.isEmpty(chatData.userEmail)) {
-                    final EditText editText = new EditText(FireBaseCommunity.this);
-                    new AlertDialog.Builder(FireBaseCommunity.this)
-                            .setMessage(chatData.userEmail + " 님 에게 메시지 보내기")
-                            .setView(editText)
-                            .setPositiveButton("보내기", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    sendPostToFCM(chatData, editText.getText().toString());
-                                }
-                            })
-                            .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // not thing..
-                                }
-                            }).show();
-                }
-            }
-        });
 
-        mEdtMessage = (EditText) findViewById(R.id.edit_message);
         findViewById(R.id.btn_send).setOnClickListener(this);
 
         mBtnGoogleSignIn = (SignInButton) findViewById(R.id.btn_google_signin);
@@ -356,17 +330,19 @@ public class FireBaseCommunity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:
-                String message = mEdtMessage.getText().toString();
-                if (!TextUtils.isEmpty(message)) {
-                    mEdtMessage.setText("");
-                    ChatData chatData = new ChatData();
-                    chatData.userName = userName;
-                    chatData.message = message;
-                    chatData.time = System.currentTimeMillis();
-                    chatData.userEmail = mAuth.getCurrentUser().getEmail(); // 사용자 이메일 주소
-                    chatData.userPhotoUrl = mAuth.getCurrentUser().getPhotoUrl().toString(); // 사용자 프로필 이미지 주소
-                    mDatabaseReference.push().setValue(chatData);
-                }
+                Intent intent = new Intent(this, CommunityAddActivity.class);
+                startActivityForResult(intent,0);
+//                String message = mEdtMessage.getText().toString();
+//                if (!TextUtils.isEmpty(message)) {
+//                    mEdtMessage.setText("");
+//                    ChatData chatData = new ChatData();
+//                    chatData.userName = userName;
+//                    chatData.message = message;
+//                    chatData.time = System.currentTimeMillis();
+//                    chatData.userEmail = mAuth.getCurrentUser().getEmail(); // 사용자 이메일 주소
+//                    chatData.userPhotoUrl = mAuth.getCurrentUser().getPhotoUrl().toString(); // 사용자 프로필 이미지 주소
+//                    mDatabaseReference.push().setValue(chatData);
+//                }
                 break;
             case R.id.btn_google_signin:
                 signIn();
