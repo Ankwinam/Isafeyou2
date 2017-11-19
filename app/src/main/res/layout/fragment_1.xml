@@ -15,7 +15,6 @@
         android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
         android:text="긴급상황 발생시 2번 연속 탭 해주세요!"
-        android:textColor="#f3a9aa"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -56,12 +55,13 @@
         android:id="@+id/Whistle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="호루라기"
         android:layout_below="@+id/safebutton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:background="@drawable/buttonnn"
+        android:text="호루라기"
         android:textColor="#ffffff"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
