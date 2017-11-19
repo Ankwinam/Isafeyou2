@@ -160,6 +160,7 @@ public class TabFragment3 extends Fragment {
         contactadd_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("번호", "ddfgdg");
                 Intent intent = new Intent(getContext(), ContactAddActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }

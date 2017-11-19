@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,12 +21,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.kwinam.isafeyou.R;
 import com.example.kwinam.isafeyou.isafeyou.Activity.WhistleActivity;
+import com.example.kwinam.isafeyou.isafeyou.DataBase.SQLiteAdapter;
 import com.pkmmte.view.CircularImageView;
 import com.skp.Tmap.TMapPoint;
 
@@ -42,9 +48,47 @@ public class TabFragment1 extends Fragment {
 
     private boolean mHasDoubleClicked = false;
 
+    ////////////////
+    static final int REQUEST_CODE = 1234;
+    private SQLiteAdapter mySQLiteAdapter;
+    SQLiteDatabase db;
+    String sql;
+    Cursor cursor;
+    String[] result;
+    int count;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_1, container, false);
+
+        ///////////////////////////////
+        //SQLite
+        mySQLiteAdapter = new SQLiteAdapter(getActivity());
+        try{
+            db = mySQLiteAdapter.getWritableDatabase(); //데이터베이스 객체를 얻기 위해 호출
+        } catch (SQLiteException e) {
+            db = mySQLiteAdapter.getReadableDatabase();
+        }
+        try{
+            sql = "SELECT * FROM contact";
+            cursor = db.rawQuery(sql, null);
+
+            count = cursor.getCount(); //db 데이터 개수
+            result = new String[count];
+            Log.d("번호", "헤헤"+count);
+
+            for(int i = 0; i < count; i++){
+                cursor.moveToNext(); //첫번째에서 다음 레코드가 없을때까지 읽음
+                String str_phone = cursor.getString(2); //첫번째 속성
+                result[i] = str_phone; //각각의 속성들을 해당 배열의 i열에 저장
+                Log.d("번호", result[i]);
+            }
+
+        } catch (Exception e) {
+            System.out.println("select Error :  " + e);
+        }
+
+
         Button whistle = (Button) view.findViewById(R.id.Whistle);
         CircularImageView safebutton = (CircularImageView) view.findViewById(R.id.safebutton);
         ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.SEND_SMS},1);
@@ -68,7 +112,11 @@ public class TabFragment1 extends Fragment {
                 long pressTime = System.currentTimeMillis();
                 if(pressTime - lastPressTIme <= DOUBLE_PRESS_INTERVAL){
                     try {
-                        sendSMS("01051436822");
+                        //sendSMS("01051436822");
+                        for(int i=0; i<count; i++){
+                            sendSMS(result[i]);
+                        }
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -91,7 +139,7 @@ public class TabFragment1 extends Fragment {
 
     public void sendSMS(String phoneNo) throws InterruptedException {
         String messageURL = "https://www.google.co.kr/maps/search/" + latitude + "+" + longitude;
-        String message ="이태웅님이 위의 장소에서 위험에 처했습니다! \n 도와주세요!";
+        String message ="제가 지금 위의 장소에서 위험에 처했습니다! \n 도와주세요!";
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phoneNo, null, messageURL, null, null);
         Thread.sleep(1000);
