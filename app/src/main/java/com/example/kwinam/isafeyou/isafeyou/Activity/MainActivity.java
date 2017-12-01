@@ -2,6 +2,7 @@ package com.example.kwinam.isafeyou.isafeyou.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.kwinam.isafeyou.R;
 import com.example.kwinam.isafeyou.isafeyou.Adapter.TabPagerAdapter;
+import com.example.kwinam.isafeyou.isafeyou.Fragment.TabFragment2;
 
 import static com.example.kwinam.isafeyou.isafeyou.Fragment.TabFragment2.MY_PERMISSIONS_REQUEST_LOCATION;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     LocationManager lm = null;
 
     private TextView toolbar_title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,6 +239,11 @@ public class MainActivity extends AppCompatActivity {
         String ringtone = pref.getString("ringtone", "");
         int time_interval = Integer.parseInt(pref.getString("time_interval", "0"));
         String message = pref.getString("message", "도와주세요! 위급 상황입니다.");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     public boolean checkLocationPermission() {

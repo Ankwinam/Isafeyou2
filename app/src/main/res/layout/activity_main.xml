@@ -37,6 +37,7 @@
                     android:text="I·SAFE·U"
                     android:textColor="#f3a9aa"
                     android:textSize="24sp" />
+
             </FrameLayout>
         </android.support.v7.widget.Toolbar>
 

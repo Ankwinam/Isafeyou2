@@ -16,7 +16,6 @@ import com.example.kwinam.isafeyou.isafeyou.Fragment.TabFragment2;
 
 public class OnLock_Service extends Service{
     private BroadcastReceiver mReceiver;
-
     @Override
     public void onCreate() {
         super.onCreate();

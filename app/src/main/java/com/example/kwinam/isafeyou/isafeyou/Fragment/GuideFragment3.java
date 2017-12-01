@@ -1,6 +1,7 @@
 package com.example.kwinam.isafeyou.isafeyou.Fragment;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +19,7 @@ import com.example.kwinam.isafeyou.R;
  * Created by Taewoong on 2017-08-02.
  */
 
-public class GuideFragment3 extends android.support.v4.app.Fragment{
+public class GuideFragment3 extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

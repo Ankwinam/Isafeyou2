@@ -68,7 +68,6 @@ public class TabFragment2 extends Fragment {
         tmapdata = new TMapData();
         tmapgps = new TMapGpsManager(getActivity());
         View view = inflater.inflate(R.layout.fragment_2, container, false);
-
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -184,7 +183,7 @@ public class TabFragment2 extends Fragment {
         });
     }
 
-    public final LocationListener mLocationListener = new LocationListener() {
+    public LocationListener mLocationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             //여기서 위치값이 갱신되면 이벤트가 발생한다.
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.

@@ -23,8 +23,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.kwinam.isafeyou.R;
@@ -88,7 +90,6 @@ public class TabFragment1 extends Fragment {
             System.out.println("select Error :  " + e);
         }
 
-
         Button whistle = (Button) view.findViewById(R.id.Whistle);
         CircularImageView safebutton = (CircularImageView) view.findViewById(R.id.safebutton);
         ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.SEND_SMS},1);
@@ -137,6 +138,14 @@ public class TabFragment1 extends Fragment {
         return view;
     }
 
+
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+    }
+
     public void sendSMS(String phoneNo) throws InterruptedException {
         String messageURL = "https://www.google.co.kr/maps/search/" + latitude + "+" + longitude;
         String message ="제가 지금 위의 장소에서 위험에 처했습니다! \n 도와주세요!";
@@ -144,7 +153,26 @@ public class TabFragment1 extends Fragment {
         smsManager.sendTextMessage(phoneNo, null, messageURL, null, null);
         Thread.sleep(1000);
         smsManager.sendTextMessage(phoneNo, null, message, null, null);
-        Toast.makeText(getActivity(),"메세지가 전송되었습니다",Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendSMS(String phoneNo, double latitude, double longitude) throws InterruptedException {
+        Log.e("coordinate", latitude + "," + longitude);
+        String messageURL = "https://www.google.co.kr/maps/search/" + latitude + "+" + longitude;
+        String message ="제가 지금 위의 장소에서 위험에 처했습니다! \n 도와주세요!";
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNo, null, messageURL, null, null);
+        Thread.sleep(1000);
+        smsManager.sendTextMessage(phoneNo, null, message, null, null);
+    }
+
+    public void sendSMS(String phoneNo, double latitude, double longitude, String str) throws InterruptedException {
+        Log.e("coordinate", latitude + "," + longitude);
+        String messageURL = "https://www.google.co.kr/maps/search/" + latitude + "+" + longitude;
+        String message = str;
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNo, null, messageURL, null, null);
+        Thread.sleep(1000);
+        smsManager.sendTextMessage(phoneNo, null, message, null, null);
     }
 
     public final LocationListener mLocationListener = new LocationListener() {
@@ -200,5 +228,10 @@ public class TabFragment1 extends Fragment {
                 2, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
     }
-
+    public double getLongitude(){
+        return this.longitude;
+    }
+    public double getLatitude(){
+        return this.latitude;
+    }
 }

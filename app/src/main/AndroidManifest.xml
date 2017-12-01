@@ -63,6 +63,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".isafeyou.Activity.AlarmService_service"/>
         <service android:name=".isafeyou.Activity.OnLock_Service"/>
     </application>
 

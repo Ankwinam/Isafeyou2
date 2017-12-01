@@ -27,6 +27,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="안심귀가 서비스">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="safe"
+            android:summary="일정 시간마다 위치정보 전송 On/Off"
+            android:switchTextOff="OFF"
+            android:switchTextOn="ON"
+            android:title="안심귀가" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/time_interval"

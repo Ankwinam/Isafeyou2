@@ -3,6 +3,7 @@ package com.example.kwinam.isafeyou.isafeyou.Activity;
 /**
  * Created by KwiNam on 2017-11-18.
  */
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -324,25 +326,28 @@ public class FireBaseCommunity extends AppCompatActivity implements View.OnClick
                 updateProfile();
             }
         }
+        if(requestCode == 101){
+            Log.e("RESULT_OK", "여까진 왔는지라");
+            String message = "장소   : " + data.getStringExtra("ADDRESS") + "\n" +
+                             "세부 장소: " + data.getStringExtra("ADDRESS_EXTRA") + "\n" +
+                             "날짜   : " + data.getStringExtra("DATE") + "\n" +
+                             "시간   : " + data.getStringExtra("TIME") + "\n" +
+                             "코멘트  : " + data.getStringExtra("COMMENT");
+            ChatData chatData = new ChatData();
+            chatData.userName = userName;
+            chatData.message = message;
+            chatData.time = System.currentTimeMillis();
+            chatData.userEmail = mAuth.getCurrentUser().getEmail(); // 사용자 이메일 주소
+            chatData.userPhotoUrl = mAuth.getCurrentUser().getPhotoUrl().toString(); // 사용자 프로필 이미지 주소
+            mDatabaseReference.push().setValue(chatData);
+        }
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:
                 Intent intent = new Intent(this, CommunityAddActivity.class);
-                startActivityForResult(intent,0);
-//                String message = mEdtMessage.getText().toString();
-//                if (!TextUtils.isEmpty(message)) {
-//                    mEdtMessage.setText("");
-//                    ChatData chatData = new ChatData();
-//                    chatData.userName = userName;
-//                    chatData.message = message;
-//                    chatData.time = System.currentTimeMillis();
-//                    chatData.userEmail = mAuth.getCurrentUser().getEmail(); // 사용자 이메일 주소
-//                    chatData.userPhotoUrl = mAuth.getCurrentUser().getPhotoUrl().toString(); // 사용자 프로필 이미지 주소
-//                    mDatabaseReference.push().setValue(chatData);
-//                }
+                startActivityForResult(intent,101);
                 break;
             case R.id.btn_google_signin:
                 signIn();
